@@ -39,7 +39,7 @@ mkdir ${stats_dir}
 if [ ! -d ${popmap_dir} ]; then
   for file in ${files}
   do
-  echo -e "${file}\tpop1">> ${popmap_dir}
+  echo -e "${file}\tpop1" >> ${popmap_dir}
   done
 fi
 
@@ -51,7 +51,9 @@ else
   if [ -n `which curl` ] ; then
     curl -o ${workdir}/chr_fig.py https://raw.githubusercontent.com/ShuXingYu94/NGS_Process_Sample/master/chr_fig.py
     curl -o ${workdir}/consensus.py https://raw.githubusercontent.com/ShuXingYu94/NGS_Process_Sample/master/consensus.py
-  else exit 0
+  else
+    echo "Wget and Curl are not installed. Please install."
+    exit 0
   fi
 fi
 
