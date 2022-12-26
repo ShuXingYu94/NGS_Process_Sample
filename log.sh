@@ -1,3 +1,4 @@
+#!/bin/bash
 
 # Required Settings
 workdir=/Users/zhuxingyu/20221218_MIG_dpMIG/test_dir
@@ -25,21 +26,34 @@ trimmed_dir=${workdir}/trimmed
 aligned_dir=${workdir}/aligned
 stacks_dir=${workdir}/stacks
 log_dir=${workdir}/log
+stats_dir=${workdir}/statistics
 
 # mkdir in workdirection
 mkdir ${trimmed_dir}
 mkdir ${aligned_dir}
 mkdir ${stacks_dir}
 mkdir ${log_dir}
+mkdir ${stats_dir}
 
 # popmap.txt
-for file in ${files}
-do
-echo -e "${file}\tpop1">> ${popmap_dir}
-done
+if [ ! -d ${popmap_dir} ]; then
+  for file in ${files}
+  do
+  echo -e "${file}\tpop1">> ${popmap_dir}
+  done
+fi
 
 # Fetch file python & R from github
-# Need special from macos or windows/linux systems
+if ! [ -n `which wget` ] ; then
+  wget -O ${workdir}/chr_fig.py https://raw.githubusercontent.com/ShuXingYu94/NGS_Process_Sample/master/chr_fig.py
+  wget -O ${workdir}/consensus.py https://raw.githubusercontent.com/ShuXingYu94/NGS_Process_Sample/master/consensus.py
+else
+  if [ -n `which curl` ] ; then
+    curl -o ${workdir}/chr_fig.py https://raw.githubusercontent.com/ShuXingYu94/NGS_Process_Sample/master/chr_fig.py
+    curl -o ${workdir}/consensus.py https://raw.githubusercontent.com/ShuXingYu94/NGS_Process_Sample/master/consensus.py
+  else exit 0
+  fi
+fi
 
 # Trimming
 for f in ${basecall_dir}/*R1*.gz
@@ -83,9 +97,3 @@ python3 ${stacks_dir}/chr_fig.py
 
 
 
-# for test
-rm -rf ${workdir}/aligned
-rm -rf ${workdir}/log
-rm ${workdir}/popmap.txt
-rm -rf ${workdir}/stacks
-rm -rf ${workdir}/trimmed
