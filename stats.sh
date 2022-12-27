@@ -55,11 +55,16 @@ else
   fi
 fi
 
+
 # Consensus Coverage (Of Genome Size) - with bash script
 # Consensus Coverage (Of Mapped Length After Trimming)) - with bash script
+
 # SNPs Count - with bash script using vcf file
+awk -v FS=":" '$8 > 0{ print $0 }' ./stacks/populations.snps.vcf | echo -e "\tSNPs_all\t"`awk "END{print NR}"` >> ${stats_dir}/results.txt
+awk -v FS=":" '$8 > 10{ print $0 }' ./stacks/populations.snps.vcf | awk -v FS=":" '$12 > 10{ print $0 }' | echo -e "\tSNPs_depth>10\t"`awk "END{print NR}"` >> ${stats_dir}/results.txt
+
 # Average snp depth - Figure with vcftools - R
-vcftools --vcf ${stacks_dir}/populations.snps.vcf --site-mean-depth  --temp ${log_dir} --out ${stacks_dir}/mean_depth_stat
+#vcftools --vcf ${stacks_dir}/populations.snps.vcf --out ${stats_dir}/mean_depth_stat --site-mean-depth --min-meanDP 10
 #proceed in python/R
 
 # snp across chr - python script
@@ -72,9 +77,8 @@ else
     echo "Python is not installed. Please install."
   fi
 fi
+
 # Mapped Length/SNP
-
-
 # Consensus Length/SNP
 
 
