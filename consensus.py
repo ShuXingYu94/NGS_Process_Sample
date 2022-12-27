@@ -16,7 +16,7 @@ def uniq(ls):
     return out
 def array_unique(lst):
     return dict(zip(*np.unique(lst, return_counts=True)))
-def read_table(name,prefix='test_',subfix='.txt',folder='./',usecol=range(0,11)):
+def read_table(name,prefix='test_',subfix='.txt',folder='./stacks/',usecol=range(0,11)):
     address='{0}{1}{2}{3}'.format(folder,prefix,name,subfix)
     df=pd.read_table(address,header=None,on_bad_lines='warn',usecols=usecol,engine='python')
     if df.index[0]!=0:
@@ -96,7 +96,7 @@ def operate(sample_names, ISIZE_upper=500, ISIZE_lower=-500, MAPQ=30, MRNM='=', 
     #         for element in uniq(list(df.iloc[:,-1])):
     #             if element not in chr_ls:
     #                 chr_ls.append(element)
-    chr_df = pd.read_table('./catalog.chrs.tsv')
+    chr_df = pd.read_table('./stacks/catalog.chrs.tsv')
     chr_ls = list(chr_df['# Chrom'])
     print('{} chromosomes are found.'.format(len(chr_ls)))
 
@@ -105,7 +105,7 @@ def operate(sample_names, ISIZE_upper=500, ISIZE_lower=-500, MAPQ=30, MRNM='=', 
         ISIZE_upper, ISIZE_lower, MAPQ, MRNM))
     for sample_name in sample_names:
         print('Processing read data of {}'.format(sample_name))
-        df = read_table(sample_name, prefix='', subfix='.txt', folder='./')  # Read file
+        df = read_table(sample_name, prefix='', subfix='.txt', folder='./stacks/')  # Read file
         df = process_table(df)  # Acquire start-pos, end-pos, seq_length
         filtered_data = filter_df(df, ISIZE_upper, ISIZE_lower, MAPQ, MRNM)
 
@@ -152,7 +152,7 @@ def calculate_mean(ary_df):
     print('Overlapping-Rate Mean Calculation Complete.')
     return ary_mean
 
-with open('names.txt') as f:
+with open('./statistics/file_names.txt') as f:
     text=f.read()
     f.close()
 filelist=[]
@@ -167,7 +167,8 @@ ISIZE_upper=1000 # Upper range of insetion size
 ISIZE_lower=-1000    # Lower range of insetion size
 MAPQ=30 # Map quality
 MRNM='='    # If pair end reads are mapped on the same chromosome
-result=operate(['M1-LE','M2-LE'],ISIZE_upper,ISIZE_lower,MAPQ,MRNM,overlap_rate)
-result.to_csv('compare_M-LE_output.csv'.format(len(sample_names)))
+
+result=operate(filelist,ISIZE_upper,ISIZE_lower,MAPQ,MRNM,overlap_rate)
+result.to_csv('./statistics/compare_output.csv')
 result_stat=calculate_mean(result)
-result_stat.to_csv('compare_M-LE_statistic.csv'.format(len(sample_names)))
+result_stat.to_csv('./statistics/compare_statistic.csv')

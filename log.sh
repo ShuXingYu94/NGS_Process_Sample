@@ -99,8 +99,8 @@ ls ${aligned_dir}/*.txt> ${stats_dir}/file_names.txt
 
 for file in $files
 do
-if ! test -f "${stats_dir}/${file}.txt"; then
-  samtools view -@ ${threads} ${aligned_dir}/${file}.bam --threads 6 > ${stats_dir}/${file}.txt
+if ! test -f "${aligned_dir}/${file}.txt"; then
+  samtools view -@ ${threads} ${aligned_dir}/${file}.bam --threads 6 > ${aligned_dir}/${file}.txt
 fi
 done
 
@@ -109,7 +109,7 @@ done
 # SNPs Count - with bash script using vcf file
 # Average snp depth - Figure with vcftools - R
 vcftools --vcf ${stacks_dir}/populations.snps.vcf --site-mean-depth  --temp ${log_dir} --out ${stacks_dir}/mean_depth_stat
-#proceed in python
+#proceed in python/R
 
 # snp across chr - python script
 python3 ${stacks_dir}/chr_fig.py
