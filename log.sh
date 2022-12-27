@@ -47,10 +47,12 @@ fi
 if ! [ -n `which wget` ] ; then
   wget -O ${workdir}/chr_fig.py https://raw.githubusercontent.com/ShuXingYu94/NGS_Process_Sample/master/chr_fig.py
   wget -O ${workdir}/consensus.py https://raw.githubusercontent.com/ShuXingYu94/NGS_Process_Sample/master/consensus.py
+  wget -O ${workdir}/MIGadapter.fasta https://raw.githubusercontent.com/ShuXingYu94/NGS_Process_Sample/master/MIGadapter.fasta
 else
   if [ -n `which curl` ] ; then
     curl -o ${workdir}/chr_fig.py https://raw.githubusercontent.com/ShuXingYu94/NGS_Process_Sample/master/chr_fig.py
     curl -o ${workdir}/consensus.py https://raw.githubusercontent.com/ShuXingYu94/NGS_Process_Sample/master/consensus.py
+    curl -o ${workdir}/MIGadapter.fasta https://raw.githubusercontent.com/ShuXingYu94/NGS_Process_Sample/master/MIGadapter.fasta
   else
     echo "Wget and Curl are not installed. Please install."
     exit 0
@@ -75,45 +77,3 @@ done
 # Stacks
 gstacks -I ${aligned_dir} -M ${popmap_dir}  -O ${stacks_dir} -t ${threads}
 populations -t ${threads} -P ${stacks_dir} -M ${popmap_dir} --structure --vcf  -r ${stacks_r} -O ${stacks_dir}
-
-# Statistics
-
-# Reads Count (Raw Data) - with seqkit stats
-seqkit stats ${basecall_dir}/*.gz -T -j ${threads} > ${stats_dir}/Raw_read_stats.txt
-#awk '{print $1,$4}' ${stats_dir}/Raw_read_stats.txt
-
-# Reads Count (After trmming) - with seqkit stats
-seqkit stats ${trimmed_dir}/*.gz -T -j ${threads} > ${stats_dir}/Trimmed_read_stats.txt
-#${trimmed_dir}+[\S]*R[1|2]up[\S]*[.gz]
-# Trimming rate/ Surviving rate
-
-# Mapped Length (After Trimming) - with samtools
-samtools view test.bam | awk '{print length($10)}'
-samtools view ${aligned_dir}/d1-LE.bam | awk '{print length($10)}'
-# Mapped Reads Coverage (After Trimming/ Genome Size)
-#   Need Genome Size(from chr file?) - with samtools
-# Average Mapped Reads depth - with samtools
-
-# Consensus Length - python script
-ls ${aligned_dir}/*.txt> ${stats_dir}/file_names.txt
-
-for file in $files
-do
-if ! test -f "${aligned_dir}/${file}.txt"; then
-  samtools view -@ ${threads} ${aligned_dir}/${file}.bam --threads 6 > ${aligned_dir}/${file}.txt
-fi
-done
-
-# Consensus Coverage (Of Genome Size) - with bash script
-# Consensus Coverage (Of Mapped Length After Trimming)) - with bash script
-# SNPs Count - with bash script using vcf file
-# Average snp depth - Figure with vcftools - R
-vcftools --vcf ${stacks_dir}/populations.snps.vcf --site-mean-depth  --temp ${log_dir} --out ${stacks_dir}/mean_depth_stat
-#proceed in python/R
-
-# snp across chr - python script
-python3 ${stacks_dir}/chr_fig.py
-# Mapped Length/SNP
-
-
-# Consensus Length/SNP
