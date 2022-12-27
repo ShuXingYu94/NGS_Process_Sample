@@ -105,7 +105,7 @@ def operate(sample_names, ISIZE_upper=500, ISIZE_lower=-500, MAPQ=30, MRNM='=', 
         ISIZE_upper, ISIZE_lower, MAPQ, MRNM))
     for sample_name in sample_names:
         print('Processing read data of {}'.format(sample_name))
-        df = read_table(sample_name, prefix='', subfix='.txt', folder='./stacks/')  # Read file
+        df = read_table(sample_name, prefix='', subfix='.txt', folder='./statistics/bam2txt/')  # Read file
         df = process_table(df)  # Acquire start-pos, end-pos, seq_length
         filtered_data = filter_df(df, ISIZE_upper, ISIZE_lower, MAPQ, MRNM)
 
