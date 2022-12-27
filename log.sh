@@ -44,12 +44,12 @@ if [ ! -d ${popmap_dir} ]; then
 fi
 
 # Fetch file python & R from github
-if ! [ -n `which wget` ] ; then
+if command -v wget >/dev/null 2>&1; then
   wget -O ${workdir}/chr_fig.py https://raw.githubusercontent.com/ShuXingYu94/NGS_Process_Sample/master/chr_fig.py
   wget -O ${workdir}/consensus.py https://raw.githubusercontent.com/ShuXingYu94/NGS_Process_Sample/master/consensus.py
   wget -O ${workdir}/MIGadapter.fasta https://raw.githubusercontent.com/ShuXingYu94/NGS_Process_Sample/master/MIGadapter.fasta
 else
-  if [ -n `which curl` ] ; then
+  if command -v curl >/dev/null 2>&1; then
     curl -o ${workdir}/chr_fig.py https://raw.githubusercontent.com/ShuXingYu94/NGS_Process_Sample/master/chr_fig.py
     curl -o ${workdir}/consensus.py https://raw.githubusercontent.com/ShuXingYu94/NGS_Process_Sample/master/consensus.py
     curl -o ${workdir}/MIGadapter.fasta https://raw.githubusercontent.com/ShuXingYu94/NGS_Process_Sample/master/MIGadapter.fasta

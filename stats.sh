@@ -45,10 +45,10 @@ if ! test -f "${aligned_dir}/${file}.txt"; then
 fi
 done
 
-if [ -n `which python3` ] ; then
+if command -v python3 >/dev/null 2>&1; then
   python3 ${workdir}/consensus.py
 else
-  if [ -n `which python` ] ; then
+  if command -v python >/dev/null 2>&1; then
     python ${workdir}/consensus.py
   else
     echo "Python is not installed. Please install."
