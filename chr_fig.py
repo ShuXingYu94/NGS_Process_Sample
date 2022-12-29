@@ -2,6 +2,10 @@ import pandas as pd
 from dna_features_viewer import GraphicFeature, GraphicRecord
 import matplotlib.pyplot as plt
 import io
+import sys
+
+vcf_address=sys.argv[0]
+out_name=sys.argv[1]
 
 
 def read_vcf(path):
@@ -14,8 +18,7 @@ def read_vcf(path):
         sep='\t'
     )
 
-
-df = read_vcf('./stacks/populations.snps.vcf')
+df = read_vcf(vcf_address)
 length_ls = pd.read_table('./stacks/catalog.chrs.tsv')
 
 df = df.loc[:, '#CHROM':'POS']
@@ -48,4 +51,4 @@ for chrom in chromosome:
     record = GraphicRecord(sequence_length=length, features=features, ticks_resolution=length / 4)
     ax.set_title("Chromosome {}".format(chrom), loc='left', weight='bold')
     record.plot(ax=ax)
-fig.savefig('./statistics/Distribu tion of SNPs.svg', format='svg')
+fig.savefig('{}.svg'.format(out_name), format='svg')
