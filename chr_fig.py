@@ -4,24 +4,23 @@ import matplotlib.pyplot as plt
 import io
 import sys
 
-vcf_address=sys.argv[0]
-out_name=sys.argv[1]
-
-
 def read_vcf(path):
     with open(path, 'r') as f:
-        lines = [l for l in f if not l.startswith('##')]
+        lines = [l for l in f if not '##' in l]
     return pd.read_csv(
         io.StringIO(''.join(lines)),
         dtype={'#CHROM': str, 'POS': int, 'ID': str, 'REF': str, 'ALT': str,
                'QUAL': str, 'FILTER': str, 'INFO': str},
+        header=0,
         sep='\t'
     )
 
+vcf_address=sys.argv[1]
+out_name=sys.argv[2]
+
 df = read_vcf(vcf_address)
 length_ls = pd.read_table('./stacks/catalog.chrs.tsv')
-
-df = df.loc[:, '#CHROM':'POS']
+df = df.iloc[:, ['#CHROM','POS']]
 
 tmp = list(df['#CHROM'])
 chromosome = []
