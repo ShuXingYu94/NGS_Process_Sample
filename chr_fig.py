@@ -20,7 +20,7 @@ out_name=sys.argv[2]
 
 df = read_vcf(vcf_address)
 length_ls = pd.read_table('./stacks/catalog.chrs.tsv')
-df = df.iloc[:, ['#CHROM','POS']]
+df = df.loc[:, ['#CHROM','POS']]
 
 tmp = list(df['#CHROM'])
 chromosome = []

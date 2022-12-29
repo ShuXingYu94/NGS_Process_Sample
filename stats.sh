@@ -18,12 +18,12 @@ cd  ${workdir}
 
 # Mapped Length (After Trimming) - with samtools depth
 #echo "#Mapped Length" >> ${stats_dir}/results.txt
-#mkdir ${stats_dir}/Read_depth_0
+#mkdir ${stats_dir}/Read_depth
 #for file in $files
 #do
-#samtools depth ${aligned_dir}/$file.bam | awk '($3+0) > 0 {print $0}' > ${stats_dir}/Read_depth_0/$file.txt
+#samtools depth ${aligned_dir}/$file.bam | awk '($3+0) > 0 {print $0}' > ${stats_dir}/Read_depth/$file.txt
 #echo -e "$file\tMapped Length\t"`awk "END{print NR}" ${stats_dir}/Read_depth/$file.txt` >> ${stats_dir}/results.txt
-#awk 'BEGIN{sum=0}{sum += $3}END{print sum/NR}' ${stats_dir}/Read_depth/$file.txt >> ${stats_dir}/results.txt
+##awk 'BEGIN{sum=0}{sum += $3}END{print sum/NR}' ${stats_dir}/Read_depth/$file.txt >> ${stats_dir}/results.txt
 #done
 
 #echo "#Mapped Length with depth >= 10" >> ${stats_dir}/results.txt
@@ -45,7 +45,7 @@ samtools coverage ${aligned_dir}/$file.bam -o ${stats_dir}/Coverage/$file.txt
 REF_length=`awk 'BEGIN{sum=0}{sum += $3}END{print sum}' ${stats_dir}/Coverage/$file.txt`
 READ_sum=`awk 'BEGIN{sum=0}{sum += $4}END{print sum}' ${stats_dir}/Coverage/$file.txt`
 MAPPED_bases=`awk 'BEGIN{sum=0}{sum += $5}END{print sum}' ${stats_dir}/Coverage/$file.txt`
-DEPTH_mean=`awk 'BEGIN{sum=0}{sum += $3}END{print sum/NR}' ${stats_dir}/Read_depth/$file.txt`
+DEPTH_mean=`samtools depth ${aligned_dir}/$file.bam | awk '($3+0) > 0 {print $0}' | awk 'BEGIN{sum=0}{sum += $3}END{print sum/NR}'`
 COVERAGE=`awk 'BEGIN{len=0; ref=0}{len += $5; ref += $3}END{print len/ref}' ${stats_dir}/Coverage/$file.txt`
 echo -e "$file\t$COVERAGE\t$DEPTH_mean\t$READ_sum\t$MAPPED_bases\t$REF_length" >> ${stats_dir}/results.txt
 done
