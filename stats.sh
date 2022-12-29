@@ -3,16 +3,21 @@ cd ${workdir}
 touch ${stats_dir}/results.txt
 
 # Reads Count (Raw Data) - with seqkit stats
-seqkit stats ${basecall_dir}/*.gz -T -j ${threads} > ${stats_dir}/Raw_read_stats.txt
-#awk '{print $1,$4}' ${stats_dir}/Raw_read_stats.txt
+cd  ${basecall_dir}
+echo "#Raw Reads Count" > ${stats_dir}/results.txt
+seqkit stats *.gz -T -j ${threads} >> ${stats_dir}/results.txt
 
 # Reads Count (After trmming) - with seqkit stats
-seqkit stats ${trimmed_dir}/*.gz -T -j ${threads} > ${stats_dir}/Trimmed_read_stats.txt
-#${trimmed_dir}+[\S]*R[1|2]up[\S]*[.gz]
+cd  ${trimmed_dir}
+echo "#Timmed Reads Count" >> ${stats_dir}/results.txt
+seqkit stats *R[1-2]p*.gz -T -j ${threads} >> ${stats_dir}/results.txt
+cd  ${workdir}
+
 # Trimming rate/ Surviving rate
 
 
 # Mapped Length (After Trimming) - with samtools depth
+echo "#Mapped Length" >> ${stats_dir}/results.txt
 mkdir ${stats_dir}/Read_depth
 for file in $files
 do
@@ -26,6 +31,7 @@ mkdir ${stats_dir}/Coverage
 for file in $files
 do
 samtools coverage ${aligned_dir}/$file.bam -o ${stats_dir}/Coverage/$file.txt
+cat ${stats_dir}/Coverage/$file.txt
 done
 
 # Average Mapped Reads depth - with samtools depth
