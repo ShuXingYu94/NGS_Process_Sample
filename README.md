@@ -215,3 +215,5 @@ Currently, we have the following results that are available.
     - [ ]  R - SNP depth and distribution
 - [x]  Mapped Length / SNPs
 - [x]  Consensus Length / SNPs
+
+**Note**
