@@ -7,6 +7,7 @@
   + [Python](#python)
 * [Installing Prerequisites](#installing-prerequisites)
   + [For shell package(s)](#for-shell-package-s-)
+  + [For shell package(s)](#for-shell-package-s-)
   + [For R package(s)](#for-r-package-s-)
   + [For Python package(s)](#for-python-package-s-)
 * [Quick Guide](#quick-guide)
