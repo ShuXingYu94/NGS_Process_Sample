@@ -2,33 +2,33 @@
 > This programme takes advantage of Stacks to analyze NGS BaseCall data.
 
 * [Required environment](#required-environment)
-  + [Shell](#shell)
-  + [R](#r)
-  + [Python](#python)
+  + [Shell](#shell-)
+  + [R](#r-)
+  + [Python](#python-)
 * [Installing Prerequisites](#installing-prerequisites)
-  + [For shell package(s)](#for-shell-package-s--)
-  + [For R package(s)](#for-r-package-s--)
-  + [For Python package(s)](#for-python-package-s--)
+  + [For shell package(s)](#for-shell-package-s-)
+  + [For R package(s)](#for-r-package-s-)
+  + [For Python package(s)](#for-python-package-s-)
 * [Quick Guide](#quick-guide)
-  1. [Working directory](#1--working-directory)
+  1. [Working directory](#1-working-directory)
   2. [Download shell scripts and configuration](#2-download-shell-scripts-and-configuration)
-  3. [Executing script](#3executing-script)
+  3. [Executing script](#3-executing-script)
 * [Standard Procedure](#standard-procedure)
-  1. [Working directory](#1working-directory-1)
+  1. [Working directory](#1-working-directory-1)
 * [Interpreting Results](#interpreting-results)
 
 ## Required environment
 
-### Shell
+### Shell:
 - stacks
 - vcftools
 - samtools
 - trimmomatic
 - java
 - bwa
-### R
+### R:
 - CMplot
-### Python
+### Python:
 - matplotlib
 - pandas
 - scipy
