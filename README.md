@@ -226,7 +226,7 @@ Currently, the following results are available.
 - [x]  Average SNP Depth
 - [x]  Mapped Length / SNPs
 - [x]  Consensus Length / SNPs
-- **Figure**
+- **Figures**
 - [x]  SNPs Distribution Based on Chromosomes
     - [x]  Python - SNP distribution
     - [ ]  R - SNP depth and distribution
