@@ -10,12 +10,24 @@
   + [For R package(s)](#for-r-package-s-)
   + [For Python package(s)](#for-python-package-s-)
 * [Quick Guide](#quick-guide)
-  1. [Working directory](#1-working-directory)
-  2. [Download shell scripts and configuration](#2-download-shell-scripts-and-configuration)
-  3. [Executing script](#3-executing-script)
+  + [1. Working directory](#1-working-directory)
+  + [2. Download shell scripts and configuration](#2-download-shell-scripts-and-configuration)
+    - [Download scripts](#download-scripts)
+    - [Required configurations](#required-configurations)
+    - [Optional configurations](#optional-configurations)
+  + [3. Executing script](#3-executing-script)
+  + [Ex. To rerun the programme](#ex-to-rerun-the-programme)
 * [Documentation](#documentation)
-  1. [Working directory](#1-working-directory-1)
 * [Interpreting Results](#interpreting-results)
+  + [1. Introduction of the folders](#1-introduction-of-the-folders)
+  + [2. Statistical results preview](#2-statistical-results-preview)
+  + [3. About numerical data](#3-about-numerical-data)
+  + [4. About figures](#4-about-figures)
+    - [SNPs Distribution Figure](#snps-distribution-figure)
+    - [SNP Depth Figure](#snp-depth-figure)
+
+
+
 
 ## Required environment
 
