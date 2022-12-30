@@ -213,7 +213,7 @@ Basically, all the statistical results and figures we need is in this folder.
 ### 2. Statistical results preview
 Currently, the following results are available.
 
-- **Data**
+- **Data in table 1**
 - [x]  Reads Count of Raw Data
 - [x]  Reads Count of Trimmed Data
 - [x]  Mapped Length of Trimmed Data 
@@ -221,6 +221,8 @@ Currently, the following results are available.
 - [x]  Average Depth of Mapped Reads
 - [x]  Consensus Length
 - [x]  Consensus Coverage
+<br />
+- **Data in table 2**
 - [x]  SNPs Count
 - [x]  Average SNP Depth
 - [x]  Mapped Length / SNPs
