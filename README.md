@@ -1,5 +1,7 @@
 # Sample code for NGS processing
+
 ********************************
+
 > This programme takes advantage of Stacks to analyze NGS BaseCall data.
 
 1. [Required environment](#Required environment)
@@ -70,7 +72,9 @@ rm ./requirements.txt
 ```
 
 ## Quick Guide
+
 ***
+
 ### 1.Working directory
 Please start with the following folder structure.
 ```
@@ -124,7 +128,9 @@ Please execute the following commands in the same directory as `main.sh` and `st
 or simply copy all the commands and execute them.
 
 ## Standard Procedure
+
 ***
+
 ### 1.Working directory
 Please start with the following folder structure.
 
@@ -147,5 +153,6 @@ In case of multiple population analysis, you can put a `popmap.txt` file in `./w
 >**...still in progress, please follow the steps in Quick Guide.**
 
 ## Interpreting Results
+
 ***
 
