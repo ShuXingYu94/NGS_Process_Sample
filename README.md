@@ -6,15 +6,15 @@
   + [R](#r)
   + [Python](#python)
 * [Installing Prerequisites](#installing-prerequisites)
-  + [For shell package(s):](#for-shell-package-s--)
-  + [For R package(s):](#for-r-package-s--)
-  + [For Python package(s):](#for-python-package-s--)
+  + [For shell package(s)](#for-shell-package-s--)
+  + [For R package(s)](#for-r-package-s--)
+  + [For Python package(s)](#for-python-package-s--)
 * [Quick Guide](#quick-guide)
   1. [Working directory](#1working-directory)
   2. [Download shell scripts and configuration](#2download-shell-scripts-and-configuration)
   3. [Executing script](#3executing-script)
 * [Standard Procedure](#standard-procedure)
-  + [1.Working directory](#1working-directory-1)
+  1. [Working directory](#1working-directory-1)
 * [Interpreting Results](#interpreting-results)
 
 ## Required environment
@@ -79,7 +79,7 @@ rm ./requirements.txt
 
 ***
 
-### 1.Working directory
+### 1. Working directory
 Please start with the following folder structure.
 ```
 work_dir/
@@ -97,7 +97,7 @@ Normally, putting NGS data files in `./work_dir/BaseCall` is all you need to do.
 >
 >- In case of multiple population analysis, you can put a `popmap.txt` file in `./work_dir/`. By default, a `popmap.txt` file will be automatically generated with all the samples recognized in the same population.
 
-### 2.Download shell scripts and configuration
+### 2. Download shell scripts and configuration
 
 - Download `main.sh` and `statistics.sh` files from the Master branch to your working directory.
 
@@ -121,7 +121,7 @@ Normally, putting NGS data files in `./work_dir/BaseCall` is all you need to do.
     In case of analyzing more than 2 samples, it is recommended to set `stacks_r = 0.8` rather than `stacks_r = 1.0` by default.
 > For more information, please refer to the documentation of Trimmomatic and Stacks.
 
-### 3.Executing script
+### 3. Executing script
 Please execute the following commands in the same directory as `main.sh` and `statistics.sh`,
 
 ```
@@ -135,7 +135,7 @@ or simply copy all the commands and execute them.
 
 ***
 
-### 1.Working directory
+### 1. Working directory
 Please start with the following folder structure.
 
 ```
