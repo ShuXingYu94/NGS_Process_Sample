@@ -198,9 +198,10 @@ statistics
 ```
 Basically, all the statistical results and figures we need is in this folder.
 
-### 2. Statistical results and where to find them
-Currently, we have the following results that are available.
+### 2. Statistical results preview
+Currently, the following results are available.
 
+- **Data**
 - [x]  Reads Count of Raw Data
 - [x]  Reads Count of Trimmed Data
 - [x]  Mapped Length of Trimmed Data 
@@ -210,10 +211,21 @@ Currently, we have the following results that are available.
 - [x]  Consensus Coverage
 - [x]  SNPs Count
 - [x]  Average SNP Depth
+- [x]  Mapped Length / SNPs
+- [x]  Consensus Length / SNPs
+- **Figure**
 - [x]  SNPs Distribution Based on Chromosomes
     - [x]  Python - SNP distribution
     - [ ]  R - SNP depth and distribution
-- [x]  Mapped Length / SNPs
-- [x]  Consensus Length / SNPs
 
-**Note**
+All the numerical data are saved in `./statistics/results.txt`. It is recommended to open the file with Excel or any software that supports `.tsv` format.
+
+### 3. About numerical data
+
+In the file `./statistics/results.txt`, there are three independent tables inside.
+
+- 
+
+
+
+### 4. About figures
