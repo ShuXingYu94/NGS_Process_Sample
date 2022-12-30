@@ -221,7 +221,6 @@ Currently, the following results are available.
 - [x]  Average Depth of Mapped Reads
 - [x]  Consensus Length
 - [x]  Consensus Coverage
-<br />
 - **Data in table 2**
 - [x]  SNPs Count
 - [x]  Average SNP Depth
