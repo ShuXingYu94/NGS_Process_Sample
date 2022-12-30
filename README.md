@@ -179,7 +179,7 @@ This will remove all the generated and downloaded files and return to the origin
 ## Interpreting Results
 
 ### 1. Introduction of the folders
-Ater execution of `main.sh` and `statistics.sh`, the folder should look something like this:
+After execution of `main.sh` and `statistics.sh`, the folder should look something like this:
 
 ```
 work_dir
@@ -193,7 +193,7 @@ work_dir
 
 # the files inside is not shown
 ```
-Here, the original `fastq.gz` data files are in folder `./BaseCall`. Ater trimming with given `adapter.txt` file, the reads are saved in folder `./trimmed`. The trimmed files are subsequently mapped to reference genome and saved in `.bam` format in folder `./algined`. Then, Stacks were used to analyze mapped reads, carry out SNPs calling and population analysis. These results are saved in `./stacks`.
+Here, the original `fastq.gz` data files are in folder `./BaseCall`. After trimming with given `adapter.txt` file, the reads are saved in folder `./trimmed`. The trimmed files are subsequently mapped to reference genome and saved in `.bam` format in folder `./algined`. Then, Stacks were used to analyze mapped reads, carry out SNPs calling and population analysis. These results are saved in `./stacks`.
 
 Eventually, the statistical analysis were carried out with `statistics.sh` using the above files. The generated result files are kept in folder `./statistics`, which should look like below.
 ```
