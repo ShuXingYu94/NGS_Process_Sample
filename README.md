@@ -222,10 +222,24 @@ All the numerical data are saved in `./statistics/results.txt`. It is recommende
 
 ### 3. About numerical data
 
-In the file `./statistics/results.txt`, there are three independent tables inside.
+File `./statistics/results.txt` contains two independent tables.
 
-- 
-
-
+- Table 1 contains information from **Reads Count of Raw Data** to **Consensus Coverage**.
+- Table 2 contains information from **SNPs Count** to **Consensus Length / SNPs**
 
 ### 4. About figures
+
+#### SNPs Distribution Figure 
+
+SNPs Distribution Figure shows the distribution of SNPs on the chromosomes using reference genome information.
+
+- File `./statistics/SNPs_Distribution_0.svg` shows distribution of all the SNPs from `./stacks/populations.snps.vcf`
+- File `./statistics/SNPs_Distribution_10.svg` shows distribution of SNPs the depth of which are > 10 on both of the samples.
+
+#### SNP Depth Figure
+
+SNP Depth Figure shows the depth of each SNPs on the chromosomes.
+
+        **...still in progress.**
+
+
