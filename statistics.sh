@@ -14,7 +14,7 @@ seqkit stats *.gz -T -j ${threads} >> ${stats_dir}/results.txt
 
 # Reads Count (After trmming) - with seqkit stats
 cd  ${trimmed_dir}
-echo "#Timmed Reads Count" >> ${stats_dir}/results.txt
+echo "#Trimmed Reads Count" >> ${stats_dir}/results.txt
 seqkit stats *R[1-2]p*.gz -T -j ${threads} >> ${stats_dir}/results.txt
 cd  ${workdir}
 
@@ -72,12 +72,12 @@ echo -e "$file\t$CONSENSUS_length\t$CONSENSUS_coverage_G\t$CONSENSUS_coverage_M"
 done
 
 # SNPs Count - with bash script using vcf file
-awk -v FS=":" '$8 > 0{ print $0 }' ${workdir}/stacks/populations.snps.vcf | echo -e "SNPs_all\t"`awk "END{print NR}"` >> ${stats_dir}/results.txt
-awk -v FS=":" '$8 > 10{ print $0 }' ${workdir}/stacks/populations.snps.vcf | awk -v FS=":" '$12 > 10{ print $0 }' | echo -e "SNPs_depth>10\t"`awk "END{print NR}"` >> ${stats_dir}/results.txt
-awk -v FS=":" '$8 > 10{ print $0 }' ${workdir}/stacks/populations.snps.vcf | awk -v FS=":" '$12 > 10{ print $0 }'| sed '1s/^/#CHROM\tPOS\n/' > ${stacks_dir}/snps_depth_10.txt
-
-awk '/#CHROM/{print $0}' ${workdir}/stacks/populations.snps.vcf > ${stacks_dir}/snps_depth_10.txt
-awk -v FS=":" '$8 > 10{ print $0 }' ${workdir}/stacks/populations.snps.vcf | awk -v FS=":" '$12 > 10{ print $0 }' >> ${stacks_dir}/snps_depth_10.txt
+#awk -v FS=":" '$8 > 0{ print $0 }' ${workdir}/stacks/populations.snps.vcf | echo -e "SNPs_all\t"`awk "END{print NR}"` >> ${stats_dir}/results.txt
+#awk -v FS=":" '$8 > 10{ print $0 }' ${workdir}/stacks/populations.snps.vcf | awk -v FS=":" '$12 > 10{ print $0 }' | echo -e "SNPs_depth>10\t"`awk "END{print NR}"` >> ${stats_dir}/results.txt
+#awk -v FS=":" '$8 > 10{ print $0 }' ${workdir}/stacks/populations.snps.vcf | awk -v FS=":" '$12 > 10{ print $0 }'| sed '1s/^/#CHROM\tPOS\n/' > ${stacks_dir}/snps_depth_10.txt
+#
+#awk '/#CHROM/{print $0}' ${workdir}/stacks/populations.snps.vcf > ${stacks_dir}/snps_depth_10.txt
+#awk -v FS=":" '$8 > 10{ print $0 }' ${workdir}/stacks/populations.snps.vcf | awk -v FS=":" '$12 > 10{ print $0 }' >> ${stacks_dir}/snps_depth_10.txt
 
 # Mapped Length/SNP
 # Consensus Length/SNP

@@ -1,5 +1,5 @@
 # Sample code for NGS processing
-> This programme takes advantage of Stacks to analyze NGS BaseCall data.
+> This programme takes advantage of Stacks to analyze NGS data.
 
 * [Required environment](#required-environment)
   + [Shell](#shell)
@@ -13,7 +13,7 @@
   1. [Working directory](#1-working-directory)
   2. [Download shell scripts and configuration](#2-download-shell-scripts-and-configuration)
   3. [Executing script](#3-executing-script)
-* [Standard Procedure](#standard-procedure)
+* [Documentation](#documentation)
   1. [Working directory](#1-working-directory-1)
 * [Interpreting Results](#interpreting-results)
 
@@ -80,7 +80,7 @@ rm ./requirements.txt
 ### 1. Working directory
 Please start with the following folder structure.
 ```
-work_dir/
+work_dir
 ├── BaseCall
 │   ├── sample1_R1_001.fastq.gz
 │   ├── sample1_R2_001.fastq.gz
@@ -97,10 +97,13 @@ Normally, putting NGS data files in `./work_dir/BaseCall` is all you need to do.
 
 ### 2. Download shell scripts and configuration
 
-- Download `main.sh` and `statistics.sh` files from the Master branch to your working directory.
+#### Download scripts
+Download `main.sh` and `statistics.sh` files from the Master branch to your working directory.
 
-- Input the required configurations in `main.sh` as follows.
-    ```
+#### Required configurations
+
+Input the required configurations in `main.sh` as follows.
+
     # Required Settings
     
     workdir=/Users/.../work_dir
@@ -111,13 +114,14 @@ Normally, putting NGS data files in `./work_dir/BaseCall` is all you need to do.
     
     # Read file names
     
-    files="d1-LE
-    d2-LE"
-    ```
-- Optional configurations
+    files="sample1 sample2"
 
-    In case of analyzing more than 2 samples, it is recommended to set `stacks_r = 0.8` rather than `stacks_r = 1.0` by default.
-> For more information, please refer to the documentation of Trimmomatic and Stacks.
+#### Optional configurations
+Basically, there's no need to change the optional configurations.
+
+However, in case of analyzing more than 2 samples, it is recommended to set `stacks_r = 0.8` rather than `stacks_r = 1.0` by default.
+
+ → For more information, please refer to the documentation of Trimmomatic and Stacks.
 
 ### 3. Executing script
 Please execute the following commands in the same directory as `main.sh` and `statistics.sh`,
@@ -129,29 +133,62 @@ Please execute the following commands in the same directory as `main.sh` and `st
 
 or simply copy all the commands and execute them.
 
-## Standard Procedure
-
-### 1. Working directory
-Please start with the following folder structure.
-
-```
-work_dir/
-├── BaseCall
-│   ├── sample1_R1_001.fastq.gz
-│   ├── sample1_R2_001.fastq.gz
-│   ├── sample2_R1_001.fastq.gz
-│   └── sample2_R2_001.fastq.gz
-├── MIGadapter.fasta → (Optional)
-└── popmap.txt → (Optional)
-```
-Put NGS data files in `./work_dir/BaseCall` is all you need to do.
-
-For trimming of the original data files, an adapter.fasta file is needed. By default, a `MIGadapter.fasta` file will be downloaded.
-
-In case of multiple population analysis, you can put a `popmap.txt` file in `./work_dir/`. By default, a `popmap.txt` file will be automatically generated with all the samples recognized in the same population.
+## Documentation
 
 >**...still in progress, please follow the steps in Quick Guide.**
 
 ## Interpreting Results
 
+### 1. Introduction of the folders
+Ater execution of `main.sh` and `statistics.sh`, the folder should look something like this:
 
+```
+work_dir
+├── BaseCall
+├── aligned
+├── log
+├── stacks
+├── statistics
+│   └── Coverage
+└── trimmed
+
+# the files inside is not shown
+```
+Here, the original `fastq.gz` data files are in folder `./BaseCall`. Ater trimming with given `adapter.txt` file, the reads are saved in folder `./trimmed`. The trimmed files are subsequently mapped to reference genome and saved in `.bam` format in folder `./algined`. Then, Stacks were used to analyze mapped reads, carry out SNPs calling and population analysis. These results are saved in `./stacks`.
+
+Eventually, the statistical analysis were carried out with `statistics.sh` using the above files. The generated result files are kept in folder `./statistics`, which should look like below.
+```
+statistics
+├── Coverage
+│   ├── sample1.txt
+│   └── sample2.txt
+├── SNPs_Distribution_0.svg
+├── SNPs_Distribution_10.svg
+├── compare_output.csv
+├── compare_statistic.csv
+├── file_names.txt
+└── results.txt
+```
+Basically, all the statistical results and figures we need is in this folder.
+
+### 2. Statistical results and where to find them
+Currently, we have the following results that are available.
+
+- [x]  Reads Count of Raw Data
+- [x]  Reads Count of Trimmed Data
+- [x]  Mapped Length of Trimmed Data 
+- [x]  Mapped Coverage of Trimmed Data
+- [x]  Average Depth of Mapped Reads
+- [x]  Consensus Length
+- [x]  Consensus Coverage
+- [x]  SNPs Count
+- [x]  Average SNP Depth
+- [x]  SNPs Distribution Based on Chromosomes
+    - [x]  Python - SNP distribution
+    - [ ]  R - SNP depth and distribution
+- [x]  Mapped Length / SNPs
+- [x]  Consensus Length / SNPs
+
+>[Danger]
+>
+> Test

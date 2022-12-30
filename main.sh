@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Required Settings
-workdir=/Users/zhuxingyu/20221218_MIG_dpMIG/test_dir
+workdir=/Users/zhuxingyu/20221218_MIG_dpMIG/d-LE
 mapping_db=/Users/zhuxingyu/Reference_Genome/BnapusDarmor-bzh/BnapusDarmor-bzh.fa
 trimmomatic_dir=/Users/zhuxingyu/ADS/Trimmomatic-0.39/trimmomatic-0.39.jar
 adapter=${workdir}/MIGadapter.fasta
