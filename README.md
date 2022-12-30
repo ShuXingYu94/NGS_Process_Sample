@@ -4,14 +4,14 @@
 
 > This programme takes advantage of Stacks to analyze NGS BaseCall data.
 
-1. [Required environment](#Required environment)
-2. [Installing Prerequisites](#Installing Prerequisites)
-3. [Quick Guide](#Quick Guide)
-   1. [Working directory](#1.Working directory)
-   2. [Download shell scripts and configuration](#2.Download shell scripts and configuration)
-   3. [Executing script](#3.Executing script)
-4. [Standard Procedure](#Standard Procedure)
-5. [Interpreting Results](#Interpreting Results)
+1. [Required environment](##Required environment)
+2. [Installing Prerequisites](##Installing Prerequisites)
+3. [Quick Guide](##Quick Guide)
+   1. [Working directory](##1.Working directory)
+   2. [Download shell scripts and configuration](##2.Download shell scripts and configuration)
+   3. [Executing script](##3.Executing script)
+4. [Standard Procedure](##Standard Procedure)
+5. [Interpreting Results](##Interpreting Results)
 
 ## Required environment
 ***
@@ -87,7 +87,7 @@ work_dir/
 ├── MIGadapter.fasta → (Optional)
 └── popmap.txt → (Optional)
 ```
-Normally, Put NGS data files in `./work_dir/BaseCall` is all you need to do.
+Normally, putting NGS data files in `./work_dir/BaseCall` is all you need to do.
 
 >- For trimming of the original data files, an adapter.fasta file is needed. By default, a `MIGadapter.fasta` file will be downloaded.
 >
