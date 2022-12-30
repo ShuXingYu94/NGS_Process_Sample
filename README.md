@@ -7,7 +7,6 @@
   + [Python](#python)
 * [Installing Prerequisites](#installing-prerequisites)
   + [For shell package(s)](#for-shell-package-s-)
-  + [For shell package(s)](#for-shell-package-s-)
   + [For R package(s)](#for-r-package-s-)
   + [For Python package(s)](#for-python-package-s-)
 * [Quick Guide](#quick-guide)
@@ -37,7 +36,7 @@
 - etc.
 
 ## Installing Prerequisites
-***
+
 ### For shell package(s)
 
     Please refer to the homepage of each package for more information.
@@ -77,8 +76,6 @@ rm ./requirements.txt
 ```
 
 ## Quick Guide
-
-***
 
 ### 1. Working directory
 Please start with the following folder structure.
@@ -134,8 +131,6 @@ or simply copy all the commands and execute them.
 
 ## Standard Procedure
 
-***
-
 ### 1. Working directory
 Please start with the following folder structure.
 
@@ -159,5 +154,4 @@ In case of multiple population analysis, you can put a `popmap.txt` file in `./w
 
 ## Interpreting Results
 
-***
 
