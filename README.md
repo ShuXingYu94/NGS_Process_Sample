@@ -6,9 +6,9 @@
   + [R](#r)
   + [Python](#python)
 * [Installing Prerequisites](#installing-prerequisites)
-  + [For shell package(s)](#for-shell-package-s--)
-  + [For R package(s)](#for-r-package-s--)
-  + [For Python package(s)](#for-python-package-s--)
+  + [For shell package(s)](#for-shell-package-s-)
+  + [For R package(s)](#for-r-package-s-)
+  + [For Python package(s)](#for-python-package-s-)
 * [Quick Guide](#quick-guide)
   1. [Working directory](#1-working-directory)
   2. [Download shell scripts and configuration](#2-download-shell-scripts-and-configuration)
@@ -37,15 +37,15 @@
 
 ## Installing Prerequisites
 ***
-### For shell package(s):
+### For shell package(s)
 
     Please refer to the homepage of each package for more information.
 
-### For R package(s):
+### For R package(s)
 
     Run `install.packages("package_needed")` in R.
 
-### For Python package(s):
+### For Python package(s)
 
     Run the following script in shell. This script will download requirements.txt and automatically install.
 
