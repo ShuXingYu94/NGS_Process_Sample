@@ -137,9 +137,32 @@ or simply copy all the commands and execute them.
 >
 > **Currently, copy all the commands and execute is recommended.**
 
+
+### Ex. To rerun the programme
+
+In case you might want to delete all the generated files to rerun the programme:
+
+```
+rm -rf ${workdir}/aligned
+rm -rf ${workdir}/log
+rm ${workdir}/popmap.txt
+rm -rf ${workdir}/stacks
+rm -rf ${workdir}/trimmed
+rm -rf ${workdir}/statistics
+rm -rf ${workdir}/*.py
+```
+
+This will remove all the generated and downloaded files and return to the original [folder structure](#1-working-directory).
+
+> **Warning**
+> 
+> This is not a part of the analysis !
+> 
+> Check the directory and files you are deleting !
+
 ## Documentation
 
->**...still in progress, please follow the steps in Quick Guide.**
+        **...still in progress, please follow the steps in [Quick Guide](#quick-guide).**
 
 ## Interpreting Results
 
