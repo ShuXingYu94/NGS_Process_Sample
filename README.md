@@ -127,11 +127,15 @@ However, in case of analyzing more than 2 samples, it is recommended to set `sta
 Please execute the following commands in the same directory as `main.sh` and `statistics.sh`,
 
 ```
-./main.sh
-./statistics.sh
+bash main.sh
+bash statistics.sh
 ```
 
 or simply copy all the commands and execute them.
+
+>[Danger]
+>
+> Currently, copy all the commands and execute is recommended.
 
 ## Documentation
 

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # Required Settings
 workdir=/Users/zhuxingyu/20221218_MIG_dpMIG/d-LE

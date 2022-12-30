@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # Statistics
 # Create folder and prerequisites
@@ -17,9 +17,6 @@ cd  ${trimmed_dir}
 echo "#Trimmed Reads Count" >> ${stats_dir}/results.txt
 seqkit stats *R[1-2]p*.gz -T -j ${threads} >> ${stats_dir}/results.txt
 cd  ${workdir}
-
-# Fetch requeired data files
-
 
 # Mapped Reads Coverage (After Trimming/ Genome Size)
 echo "#Coverage" >> ${stats_dir}/results.txt
@@ -43,7 +40,7 @@ if ! test -f "${aligned_dir}/${file}.txt"; then
 fi
 done
 
-if ! test -f "${aligned_dir}/${file}.txt"; then
+if ! test -f "${stats_dir}/compare_output.csv"; then
   if command -v python3 >/dev/null 2>&1; then
     python3 ${workdir}/consensus.py
   else
@@ -54,7 +51,7 @@ if ! test -f "${aligned_dir}/${file}.txt"; then
     fi
   fi
 else
-  echo "File 'compare_output.csv' already exists. Skip pythons script 'consensus.py'. "
+  echo "File 'compare_output.csv' already exists. Skip python script 'consensus.py'. "
 fi
 # Consensus Coverage (Of Genome Size) - with bash script
 # Consensus Coverage (Of Mapped Length After Trimming)) - with bash script
@@ -72,13 +69,6 @@ echo -e "$file\t$CONSENSUS_length\t$CONSENSUS_coverage_G\t$CONSENSUS_coverage_M"
 done
 
 # SNPs Count - with bash script using vcf file
-#awk -v FS=":" '$8 > 0{ print $0 }' ${workdir}/stacks/populations.snps.vcf | echo -e "SNPs_all\t"`awk "END{print NR}"` >> ${stats_dir}/results.txt
-#awk -v FS=":" '$8 > 10{ print $0 }' ${workdir}/stacks/populations.snps.vcf | awk -v FS=":" '$12 > 10{ print $0 }' | echo -e "SNPs_depth>10\t"`awk "END{print NR}"` >> ${stats_dir}/results.txt
-#awk -v FS=":" '$8 > 10{ print $0 }' ${workdir}/stacks/populations.snps.vcf | awk -v FS=":" '$12 > 10{ print $0 }'| sed '1s/^/#CHROM\tPOS\n/' > ${stacks_dir}/snps_depth_10.txt
-#
-#awk '/#CHROM/{print $0}' ${workdir}/stacks/populations.snps.vcf > ${stacks_dir}/snps_depth_10.txt
-#awk -v FS=":" '$8 > 10{ print $0 }' ${workdir}/stacks/populations.snps.vcf | awk -v FS=":" '$12 > 10{ print $0 }' >> ${stacks_dir}/snps_depth_10.txt
-
 # Mapped Length/SNP
 # Consensus Length/SNP
 echo "#SNP count" >> ${stats_dir}/results.txt
