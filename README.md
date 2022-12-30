@@ -3,7 +3,7 @@
 
 <!-- TOC depthFrom:1 depthTo:6 withLinks:1 updateOnSave:1 orderedList:0 -->
 
-1. [Required environment](##Required environment)
+1. [Required environment](#required-environment)
 2. [Installing Prerequisites](##Installing Prerequisites)
 3. [Quick Guide](##Quick Guide)
    1. [Working directory](##1.Working directory)
