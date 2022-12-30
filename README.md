@@ -133,9 +133,9 @@ bash statistics.sh
 
 or simply copy all the commands and execute them.
 
->[Danger]
+> **Note**
 >
-> Currently, copy all the commands and execute is recommended.
+> **Currently, copy all the commands and execute is recommended.**
 
 ## Documentation
 
@@ -192,7 +192,3 @@ Currently, we have the following results that are available.
     - [ ]  R - SNP depth and distribution
 - [x]  Mapped Length / SNPs
 - [x]  Consensus Length / SNPs
-
->[Danger]
->
-> Test
