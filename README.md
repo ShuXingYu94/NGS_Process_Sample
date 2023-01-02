@@ -247,7 +247,7 @@ File `./statistics/results.txt` contains two independent tables.
 SNPs Distribution Figure shows the distribution of SNPs on the chromosomes using reference genome information.
 
 - File `./statistics/SNPs_Distribution_0.svg` shows distribution of all the SNPs from `./stacks/populations.snps.vcf`
-- File `./statistics/SNPs_Distribution_10.svg` shows distribution of SNPs the depth of which are > 10 on both of the samples.
+- File `./statistics/SNPs_Distribution_10.svg` shows distribution of SNPs the depth of which is > 10 on both of the samples.
 
 #### SNP Depth Figure
 
