@@ -47,6 +47,8 @@
 - numpy
 - etc.
 
+→ Please refer to [requirements.txt](https://github.com/ShuXingYu94/NGS_Process_Sample/blob/master/requirements.txt) for more information.
+
 ## Installing Prerequisites
 
 ### For shell package(s)
@@ -152,12 +154,17 @@ or simply copy all the commands and execute them.
 
 ### Ex. To rerun the programme
 
+> **Warning**
+> 
+> This is not a part of the analysis !
+> 
+> Check the directory and files you are deleting !
+
 1. To start from the beginning, delete all the generated files, please execute the following command:
 
 ```
 rm -rf ${workdir}/aligned
 rm -rf ${workdir}/log
-rm ${workdir}/popmap.txt
 rm -rf ${workdir}/stacks
 rm -rf ${workdir}/trimmed
 rm -rf ${workdir}/statistics
@@ -171,13 +178,6 @@ This will remove all the generated and downloaded files and return to the origin
 ```
 rm -rf ${workdir}/statistics
 ```
-
-
-> **Warning**
-> 
-> This is not a part of the analysis !
-> 
-> Check the directory and files you are deleting !
 
 ## Documentation
 
@@ -260,7 +260,7 @@ File `./statistics/results.txt` contains two independent tables.
 SNPs Distribution Figure shows the distribution of SNPs on the chromosomes using reference genome information.
 
 - File `./statistics/SNPs_Distribution_0.svg` shows distribution of all the SNPs from `./stacks/populations.snps.vcf`
-- File `./statistics/SNPs_Distribution_10.svg` shows distribution of SNPs the depth of which is > 10 on both of the samples.
+- File `./statistics/SNPs_Distribution_10.svg` shows distribution of SNPs the depth of which is >= 10 on the first two samples.
 
 #### SNP Depth Figure
 
