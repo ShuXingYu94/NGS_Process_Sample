@@ -4,8 +4,6 @@
 # Create folder and prerequisites
 touch ${stats_dir}/results.txt
 mkdir ${stats_dir}/Coverage
-#mkdir ${stats_dir}/bam2txt
-#ls ${aligned_dir}/*.bam | awk -F "/" '{print $NF}' | awk -F "." '{print $1}'> ${stats_dir}/file_names.txt
 mkdir ${stats_dir}/Read_depth
 mkdir ${stats_dir}/Consensus
 #touch ${stats_dir}/Consensus/consensus.txt
@@ -127,7 +125,3 @@ else
     echo "Python is not installed. Please install."
   fi
 fi
-
-
-
-#rm -rf ${stats_dir}/bam2txt
