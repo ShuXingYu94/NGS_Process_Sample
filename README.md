@@ -51,15 +51,15 @@
 
 ### For shell package(s)
 
-    Please refer to the homepage of each package for more information.
+Please refer to the homepage of each package for more information.
 
 ### For R package(s)
 
-    Run `install.packages("package_needed")` in R.
+Run `install.packages("package_needed")` in R.
 
 ### For Python package(s)
 
-    Run the following script in shell. This script will download requirements.txt and automatically install.
+Run the following script in shell. This script will download requirements.txt and automatically install.
 
 ```
 if command -v wget >/dev/null 2>&1; then
@@ -115,18 +115,18 @@ Download `main.sh` and `statistics.sh` files from the Master branch to your work
 #### Required configurations
 
 Input the required configurations in `main.sh` as follows.
+```
+# Required Settings
 
-    # Required Settings
-    
-    workdir=/Users/.../work_dir
-    mapping_db=/Users/.../reference_genome.fa
-    trimmomatic_dir=/Users/.../Trimmomatic-0.39/trimmomatic-0.39.jar
-    adapter=${workdir}/MIGadapter.fasta
-    popmap_dir=${workdir}/popmap.txt
-    
-    # Read file names
-    
-    files="sample1 sample2"
+workdir=/Users/.../work_dir
+mapping_db=/Users/.../reference_genome.fa
+trimmomatic_dir=/Users/.../Trimmomatic-0.39/trimmomatic-0.39.jar
+adapter=${workdir}/MIGadapter.fasta
+popmap_dir=${workdir}/popmap.txt
+
+# Read file names
+files="sample1 sample2"
+```
 
 #### Optional configurations
 Basically, there's no need to change the optional configurations.
@@ -136,6 +136,11 @@ However, in case of analyzing more than 2 samples, it is recommended to set `sta
  → For more information, please refer to the documentation of Trimmomatic and Stacks.
 
 ### 3. Executing script
+
+> **Note**
+>
+> **Currently, copy all the commands and execute is recommended.**
+
 Please execute the following commands in the same directory as `main.sh` and `statistics.sh`,
 
 ```
@@ -145,14 +150,9 @@ bash statistics.sh
 
 or simply copy all the commands and execute them.
 
-> **Note**
->
-> **Currently, copy all the commands and execute is recommended.**
-
-
 ### Ex. To rerun the programme
 
-In case you might want to delete all the generated files to rerun the programme:
+1. To start from the beginning, delete all the generated files, please execute the following command:
 
 ```
 rm -rf ${workdir}/aligned
@@ -165,6 +165,13 @@ rm -rf ${workdir}/*.py
 ```
 
 This will remove all the generated and downloaded files and return to the original [folder structure](#1-working-directory).
+
+2. To rerun the statistical analysis, please execute the following command:
+
+```
+rm -rf ${workdir}/statistics
+```
+
 
 > **Warning**
 > 
@@ -182,30 +189,36 @@ This will remove all the generated and downloaded files and return to the origin
 After execution of `main.sh` and `statistics.sh`, the folder should look something like this:
 
 ```
+
 work_dir
 ├── BaseCall
 ├── aligned
 ├── log
 ├── stacks
 ├── statistics
-│   └── Coverage
+│   ├── Consensus
+│   ├── Coverage
+│   └── Read_depth
 └── trimmed
 
 # the files inside is not shown
 ```
 Here, the original `fastq.gz` data files are in folder `./BaseCall`. After trimming with given `adapter.txt` file, the reads are saved in folder `./trimmed`. The trimmed files are subsequently mapped to reference genome and saved in `.bam` format in folder `./algined`. Then, Stacks were used to analyze mapped reads, carry out SNPs calling and population analysis. These results are saved in `./stacks`.
 
-Eventually, the statistical analysis were carried out with `statistics.sh` using the above files. The generated result files are kept in folder `./statistics`, which should look like below.
+Eventually, the statistical analysis were carried out with `statistics.sh` using the above files. The generated result files are kept in folder `./statistics`, which should look like the following.
 ```
-statistics
+statistics/
+├── Consensus
+│   ├── chr.txt
+│   └── consensus.txt
 ├── Coverage
+│   ├── sample1.txt
+│   └── sample2.txt
+├── Read_depth
 │   ├── sample1.txt
 │   └── sample2.txt
 ├── SNPs_Distribution_0.svg
 ├── SNPs_Distribution_10.svg
-├── compare_output.csv
-├── compare_statistic.csv
-├── file_names.txt
 └── results.txt
 ```
 Basically, all the statistical results and figures we need is in this folder.
@@ -254,5 +267,3 @@ SNPs Distribution Figure shows the distribution of SNPs on the chromosomes using
 SNP Depth Figure shows the depth of each SNPs on the chromosomes.
 
         **...still in progress.**
-
-
