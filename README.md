@@ -170,6 +170,8 @@ rm -rf ${workdir}/trimmed
 rm -rf ${workdir}/statistics
 rm ${workdir}/*.py
 rm ${workdir}/*.r
+
+# Optional: rm ${workdir}/popmap.txt
 ```
 
 This will remove all the generated and downloaded files and return to the original [folder structure](#1-working-directory).
@@ -245,7 +247,7 @@ Currently, the following results are available.
 - **Figures**
 - [x]  SNPs Distribution Based on Chromosomes
     - [x]  Python - SNP distribution
-    - [ ]  R - SNP depth and distribution
+    - [x]  R - SNP depth and distribution
 
 All the numerical data are saved in `./statistics/results.txt`. It is recommended to open the file with Excel or any software that supports `.tsv` format.
 

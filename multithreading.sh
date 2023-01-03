@@ -1,15 +1,15 @@
 #!/bin/sh
 
 # Required Settings
-workdir=/Users/zhuxingyu/20221218_MIG_dpMIG/d-LE
+workdir=/Users/zhuxingyu/20221218_MIG_dpMIG/M-SE
 mapping_db=/Users/zhuxingyu/Reference_Genome/BnapusDarmor-bzh/BnapusDarmor-bzh.fa
 trimmomatic_dir=/Users/zhuxingyu/ADS/Trimmomatic-0.39/trimmomatic-0.39.jar
 adapter=${workdir}/MIGadapter.fasta
 popmap_dir=${workdir}/popmap.txt
 
 # Read file names
-files="d1-LE
-d2-LE"
+files="M1-SE
+M2-SE"
 
 # Optional settings
 illumina_clip=2:30:10
@@ -28,6 +28,17 @@ stacks_dir=${workdir}/stacks
 log_dir=${workdir}/log
 stats_dir=${workdir}/statistics
 
+# Delete all the files in advance
+rm -rf ${workdir}/aligned
+rm -rf ${workdir}/log
+rm -rf ${workdir}/stacks
+rm -rf ${workdir}/trimmed
+rm -rf ${workdir}/statistics
+rm ${workdir}/*.py
+rm ${workdir}/*.r
+
+rm ${workdir}/popmap.txt
+
 # mkdir in workdirection
 mkdir ${trimmed_dir}
 mkdir ${aligned_dir}
@@ -36,11 +47,13 @@ mkdir ${log_dir}
 mkdir ${stats_dir}
 
 # popmap.txt
-if [ ! -d ${popmap_dir} ]; then
+if ! test -f "${popmap_dir}"; then
   for file in ${files}
   do
   echo -e "${file}\tpop1" >> ${popmap_dir}
   done
+else
+  echo "Popmap file already exists, skip automatically creating popmap.txt."
 fi
 
 # Fetch file python & R from github

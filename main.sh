@@ -36,11 +36,13 @@ mkdir ${log_dir}
 mkdir ${stats_dir}
 
 # popmap.txt
-if [ ! -d ${popmap_dir} ]; then
+if ! test -f "${popmap_dir}"; then
   for file in ${files}
   do
   echo -e "${file}\tpop1" >> ${popmap_dir}
   done
+else
+  echo "Popmap file already exists, skip automatically creating popmap.txt."
 fi
 
 # Fetch file python & R from github
