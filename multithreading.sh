@@ -1,15 +1,14 @@
 #!/bin/sh
 
 # Required Settings
-workdir=/Users/zhuxingyu/20221218_MIG_dpMIG/M-SE
-mapping_db=/Users/zhuxingyu/Reference_Genome/BnapusDarmor-bzh/BnapusDarmor-bzh.fa
-trimmomatic_dir=/Users/zhuxingyu/ADS/Trimmomatic-0.39/trimmomatic-0.39.jar
+workdir=/Users/.../work_dir
+mapping_db=/Users/.../reference_genome.fa
+trimmomatic_dir=/Users/.../Trimmomatic-0.39/trimmomatic-0.39.jar
 adapter=${workdir}/MIGadapter.fasta
 popmap_dir=${workdir}/popmap.txt
 
 # Read file names
-files="M1-SE
-M2-SE"
+files="sample1 sample2"
 
 # Optional settings
 illumina_clip=2:30:10
