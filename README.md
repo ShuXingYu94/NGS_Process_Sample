@@ -115,6 +115,8 @@ Normally, putting NGS data files in `./work_dir/BaseCall` is all you need to do.
 #### Download scripts
 Download `main.sh` and `statistics.sh` files from the Master branch to your working directory.
 
+You can find the recommended version in the latest release.
+
 #### Required configurations
 
 Input the required configurations in `main.sh` as follows.
@@ -185,7 +187,7 @@ rm -rf ${workdir}/statistics
 
 ## Multithread Run
 
-From the latest version, you can execute the script `multithreading.sh` along to carry out the analysis more than 20 times faster than before (By the time of 2023/1/3). 
+From the release later than v1.0.0, you can execute the script `multithreading.sh` along to carry out the analysis more than 20 times faster than before (By the time of 2023/1/3). 
 
 It takes advantage of multicore functionality to accelerate the whole calculating process, which will require more memory than before.
 
