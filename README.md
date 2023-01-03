@@ -168,7 +168,8 @@ rm -rf ${workdir}/log
 rm -rf ${workdir}/stacks
 rm -rf ${workdir}/trimmed
 rm -rf ${workdir}/statistics
-rm -rf ${workdir}/*.py
+rm ${workdir}/*.py
+rm ${workdir}/*.r
 ```
 
 This will remove all the generated and downloaded files and return to the original [folder structure](#1-working-directory).
@@ -217,6 +218,8 @@ statistics/
 ├── Read_depth
 │   ├── sample1.txt
 │   └── sample2.txt
+├── SNP_Depth_0.jpg
+├── SNP_Depth_10.jpg
 ├── SNPs_Distribution_0.svg
 ├── SNPs_Distribution_10.svg
 └── results.txt

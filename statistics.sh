@@ -118,16 +118,14 @@ SNP_Genome=$(printf "%.1f" $(echo "scale=10;${REF_length}/${SNP}" | bc))
 SNP_Consensus=$(printf "%.1f" $(echo "scale=10;${CONSENSUS_length}/${SNP}" | bc))
 echo -e "10\t$SNP\t$SNP_Genome\t$SNP_Consensus" >> ${stats_dir}/results.txt
 
-
 # Get figures
-
 # Average snp depth - Figure with vcftools - R
 # Whithout filtering
 cd ${stacks_dir}
 vcftools --vcf populations.snps.vcf --out mean_depth_stat --site-mean-depth
 awk '{$4="";print $0}' mean_depth_stat.ldepth.mean |  awk '$0=NR" "$0' > SNP_Mean_Depth.txt
 cd ${workdir}
-r -f test.r
+r -f r_plot.r
 if test -f "Rectangular-Manhattan.MEAN_DEPTH_depth.jpg"; then
   mv Rectangular-Manhattan.MEAN_DEPTH_depth.jpg ./statistics/SNP_Depth_0.jpg
 else
@@ -141,7 +139,7 @@ sed -e '/#CHROM/r vcfform.txt' snps_depth_10.txt | sed '1d' > snps_depth_10.vcf
 rm vcfform.txt
 vcftools --vcf populations.snps.vcf --site-mean-depth | awk '{$4="";print $0}' mean_depth_stat.ldepth.mean |  awk '$0=NR" "$0' >> SNP_Mean_Depth.txt
 cd ${workdir}
-r -f test.r
+r -f r_plot.r
 if test -f "Rectangular-Manhattan.MEAN_DEPTH_depth.jpg"; then
   mv Rectangular-Manhattan.MEAN_DEPTH_depth.jpg ./statistics/SNP_Depth_10.jpg
 else
