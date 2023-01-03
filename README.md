@@ -17,6 +17,7 @@
     - [Optional configurations](#optional-configurations)
   + [3. Executing script](#3-executing-script)
   + [Ex. To rerun the programme](#ex-to-rerun-the-programme)
+* [Multithread Run](#multithread-run)
 * [Documentation](#documentation)
 * [Interpreting Results](#interpreting-results)
   + [1. Introduction of the folders](#1-introduction-of-the-folders)
@@ -182,6 +183,14 @@ This will remove all the generated and downloaded files and return to the origin
 rm -rf ${workdir}/statistics
 ```
 
+## Multithread Run
+
+From the latest version, you can execute the script `multithreading.sh` along to carry out the analysis more than 20 times faster than before (By the time of 2023/1/3). 
+
+It takes advantage of multicore functionality to accelerate the whole calculating process, which will require more memory than before.
+
+Please note that it is **not recommended** to run this script before you have successfully executed all the commands stated in [Quick Guide](#quick-guide) for at least once.
+
 ## Documentation
 
         **...still in progress, please follow the steps in [Quick Guide](#quick-guide).**
@@ -265,10 +274,11 @@ File `./statistics/results.txt` contains two independent tables.
 SNPs Distribution Figure shows the distribution of SNPs on the chromosomes using reference genome information.
 
 - File `./statistics/SNPs_Distribution_0.svg` shows distribution of all the SNPs from `./stacks/populations.snps.vcf`
-- File `./statistics/SNPs_Distribution_10.svg` shows distribution of SNPs the depth of which is >= 10 on the first two samples.
+- File `./statistics/SNPs_Distribution_10.svg` shows distribution of SNPs the depth of which is >= 10 on **the first two samples**.
 
 #### SNP Depth Figure
 
 SNP Depth Figure shows the depth of each SNPs on the chromosomes.
 
-        **...still in progress.**
+- File `./statistics/SNP_Depth_0.jpg` shows depth of all the SNPs from `./stacks/populations.snps.vcf`
+- File `./statistics/SNP_Depth_10.jpg` shows depth of SNPs the depth of which is >= 10 on **the first two samples**.
