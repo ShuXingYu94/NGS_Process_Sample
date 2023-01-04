@@ -126,7 +126,7 @@ vcftools --vcf populations.snps.vcf --out mean_depth_stat --site-mean-depth
 awk '{$4="";print $0}' mean_depth_stat.ldepth.mean |  awk '$0=NR" "$0' > SNP_Mean_Depth.txt
 cd ${workdir}
 cp ./stacks/SNP_Mean_Depth.txt tmp.txt
-r -f r_plot.r
+R -f r_plot.r
 rm tmp.txt
 if test -f "Rectangular-Manhattan.MEAN_DEPTH_depth.jpg"; then
   mv Rectangular-Manhattan.MEAN_DEPTH_depth.jpg ./statistics/SNP_Depth_0.jpg
@@ -143,7 +143,7 @@ vcftools --vcf snps_depth_10.vcf --site-mean-depth --out mean_depth_stat_10
 awk '{$4="";print $0}' mean_depth_stat_10.ldepth.mean |  awk '$0=NR" "$0' > SNP_Mean_Depth_10.txt
 cd ${workdir}
 cp ./stacks/SNP_Mean_Depth_10.txt tmp.txt
-r -f r_plot.r
+R -f r_plot.r
 rm tmp.txt
 if test -f "Rectangular-Manhattan.MEAN_DEPTH_depth.jpg"; then
   mv Rectangular-Manhattan.MEAN_DEPTH_depth.jpg ./statistics/SNP_Depth_10.jpg
