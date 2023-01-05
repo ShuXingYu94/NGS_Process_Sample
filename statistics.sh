@@ -53,15 +53,19 @@ else
 fi
 
 # Main process
-echo -e "file\tR1_reads\tR2_reads\tR1_trimmed_reads\tR2_trimmed_reads\tR1_trim_rate\tR2_trim_rate\tTotal_trim_rate\tmean_coverage\tdepth_mean\tread_count\tmapped_length\treference_length\tconsensus_length\tconsensus_coverage(Genome)\tconsensus_coverage(Mapped)" > ${stats_dir}/results.txt
+echo -e "file\tR1_reads\tR2_reads\tR1_trimmed_reads\tR2_trimmed_reads\tR1_trim_rate\tR2_trim_rate\tTotal_trim_rate\tmean_coverage\tdepth_mean\tmapped_length\treference_length\tconsensus_length\tconsensus_coverage(Genome)\tconsensus_coverage(Mapped)" > ${stats_dir}/results.txt
 for file in $files
 do
+  echo "Analyzing file ${file}."
+
   # Reads Count (Raw Data) - with seqkit stats
   cd ${basecall_dir}
   fn1=`ls ${basecall_dir} | grep *$file*R1*.gz`
   fn2=`ls ${basecall_dir} | grep *$file*R1*.gz`
   R1_reads=`seqkit stats $fn1 -T -j ${threads} | awk 'NR>1{print $4}'`
   R2_reads=`seqkit stats $fn2 -T -j ${threads} | awk 'NR>1{print $4}'`
+
+  echo "Reads Count (Raw Data) parsed."
 
   # Reads Count (After trmming) - with seqkit stats
   cd  ${trimmed_dir}
@@ -75,6 +79,8 @@ do
   Total_trim_rate=$(printf "%.5f" $(echo "scale=10;(${R1_trimmed_reads}+${R2_trimmed_reads})/(${R1_reads}+${R2_reads})" | bc))
   cd  ${workdir}
 
+  echo "Reads Count (After trmming) parsed."
+
   # Mapped Reads Coverage (After Trimming/ Genome Size)
   if ! test -f "${stats_dir}/Coverage/$file.txt"; then
     samtools coverage ${aligned_dir}/$file.bam -o ${stats_dir}/Coverage/$file.txt
@@ -82,17 +88,21 @@ do
     echo "Coverage file exists. Skip creating coverage calculation."
   fi
   REF_length=`awk 'BEGIN{sum=0}{sum += $3}END{print sum}' ${stats_dir}/Coverage/$file.txt`
-  READ_sum=`awk 'BEGIN{sum=0}{sum += $4}END{print sum}' ${stats_dir}/Coverage/$file.txt`
   MAPPED_bases=`awk 'BEGIN{sum=0}{sum += $5}END{print sum}' ${stats_dir}/Coverage/$file.txt`
   DEPTH_mean=`samtools depth ${aligned_dir}/$file.bam | awk '($3+0) > 0 {print $0}' | awk 'BEGIN{sum=0}{sum += $3}END{print sum/NR}'`
   COVERAGE=`awk 'BEGIN{len=0; ref=0}{len += $5; ref += $3}END{print len/ref}' ${stats_dir}/Coverage/$file.txt`
+
+  echo "Mapped Reads Coverage data parsed."
 
   # Consensus Coverage (Of Genome Size) - with bash script
   # Consensus Coverage (Of Mapped Length After Trimming)) - with bash script
   CONSENSUS_length=`awk 'BEGIN{sum=0}{sum += $2}END{print sum}' ${stats_dir}/Consensus/consensus.txt`
   CONSENSUS_coverage_G=$(printf "%.5f" $(echo "scale=10;${CONSENSUS_length}/${REF_length}" | bc))
   CONSENSUS_coverage_M=$(printf "%.5f" $(echo "scale=10;${CONSENSUS_length}/${MAPPED_bases}" | bc))
-  echo -e "$file\t$R1_reads\t$R2_reads\t$R1_trimmed_reads\t$R2_trimmed_reads\t$R1_trim_rate\t$R2_trim_rate\t$Total_trim_rate\t$COVERAGE\t$DEPTH_mean\t$READ_sum\t$MAPPED_bases\t$REF_length\t$CONSENSUS_length\t$CONSENSUS_coverage_G\t$CONSENSUS_coverage_M" >> ${stats_dir}/results.txt
+
+  echo "Consensus analysis data parsed."
+
+  echo -e "$file\t$R1_reads\t$R2_reads\t$R1_trimmed_reads\t$R2_trimmed_reads\t$R1_trim_rate\t$R2_trim_rate\t$Total_trim_rate\t$COVERAGE\t$DEPTH_mean\t$MAPPED_bases\t$REF_length\t$CONSENSUS_length\t$CONSENSUS_coverage_G\t$CONSENSUS_coverage_M" >> ${stats_dir}/results.txt
 done
 
 # SNPs Count - with bash script using vcf file
