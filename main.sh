@@ -18,6 +18,7 @@ leading=20
 trailing=20
 minlen=50
 stacks_r=1.0
+SNPs_depth=10
 
 # Secondary dir
 basecall_dir=${workdir}/BaseCall

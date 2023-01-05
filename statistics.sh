@@ -1,6 +1,8 @@
 #!/bin/sh
 
 # Statistics
+export SNPs_depth
+
 # Download python and r scripts
 if command -v wget >/dev/null 2>&1; then
   wget -O ${workdir}/r_plot.r https://raw.githubusercontent.com/ShuXingYu94/NGS_Process_Sample/master/r_plot.r
@@ -36,18 +38,30 @@ done
 awk -v FS="\t"  'NR> 1{print $1}' ${stacks_dir}/catalog.chrs.tsv > ${stats_dir}/Consensus/chr.txt
 chromosomes=`cat ${stats_dir}/Consensus/chr.txt`
 
+#var=$sample_num*
+# export var;
+#awk 'BEGIN{print ENVIRON["var"]}'
+
+
 # consensus length
+num_files=`echo $files | wc -w`
+filter_depth=`echo "scale=0; $num_files * $stacks_r" | bc`
+export filter_depth
+
 if ! test -f "${stats_dir}/Consensus/consensus.txt"; then
   for chr in $chromosomes
   do
     {
-      CONSENSUS_length=`cat ${stats_dir}/Read_depth/*.txt | grep $chr | awk '{print $2}' | sort | uniq -cd | awk '$1 > 1{ print $0 }' | awk "END{print NR}"`
-      echo "$chr" "${CONSENSUS_length}" >> ${stats_dir}/Consensus/tmp_consensus.txt
+      cat ${stats_dir}/Read_depth/*.txt | grep $chr | awk '{print $2}' | sort | uniq -c > ${log_dir}/consensus_${chr}.txt
+      CONSENSUS_length=`awk '$1 >= ENVIRON["filter_depth"]{ print $0 }' ${log_dir}/consensus_${chr}.txt | awk "END{print NR}"`
+      map_length=`awk 'END{print NR}' ${log_dir}/consensus_${chr}.txt`
+      echo "$chr" "${CONSENSUS_length}" "$map_length" >> ${stats_dir}/Consensus/tmp_consensus.txt
       } &
   done
   wait
   sort ${stats_dir}/Consensus/tmp_consensus.txt > ${stats_dir}/Consensus/consensus.txt
   rm ${stats_dir}/Consensus/tmp_consensus.txt
+  rm ${log_dir}/consensus_*.txt
 else
   echo "Consensus sequence file exists. Skip creating consensus length calculation."
 fi
@@ -108,9 +122,9 @@ done
 # SNPs Count - with bash script using vcf file
 # Mapped Length/SNP
 # Consensus Length/SNP
-awk '/#CHROM/{print $0}' ${workdir}/stacks/populations.snps.vcf > ${stacks_dir}/snps_depth_10.txt
-awk -v FS=":" '$8 > 10{ print $0 }' ${workdir}/stacks/populations.snps.vcf | awk -v FS=":" '$12 > 10{ print $0 }' >> ${stacks_dir}/snps_depth_10.txt
 
+awk '/#CHROM/{print $0}' ${workdir}/stacks/populations.snps.vcf > ${stacks_dir}/snps_depth_10.txt
+awk -v FS=":" '$8 >= ENVIRON["SNPs_depth"]{ print $0 }' ${workdir}/stacks/populations.snps.vcf | awk -v FS=":" '$12 >= ENVIRON["SNPs_depth"]{ print $0 }' >> ${stacks_dir}/snps_depth_10.txt
 
 echo -e "\n#SNP count" >> ${stats_dir}/results.txt
 echo -e "SNP_depth\tSNP_count\tgenome_length_per_SNP\tconsensus_length_per_SNP" >> ${stats_dir}/results.txt
@@ -121,12 +135,12 @@ CONSENSUS_length=`awk 'BEGIN{sum=0}{sum += $2}END{print sum}' ${stats_dir}/Conse
 SNP=$(awk -v FS=":" '$8 > 0{ print $0 }' ${workdir}/stacks/populations.snps.vcf | awk "END{print NR}")
 SNP_Genome=$(printf "%.1f" $(echo "scale=10;${REF_length}/${SNP}" | bc))
 SNP_Consensus=$(printf "%.1f" $(echo "scale=10;${CONSENSUS_length}/${SNP}" | bc))
-echo -e "0\t$SNP\t$SNP_Genome\t$SNP_Consensus" >> ${stats_dir}/results.txt
+echo -e "SNPs depth: 0\t$SNP\t$SNP_Genome\t$SNP_Consensus" >> ${stats_dir}/results.txt
 
-SNP=$(awk -v FS=":" '$8 > 10{ print $0 }' ${workdir}/stacks/populations.snps.vcf | awk -v FS=":" '$12 > 10{ print $0 }' | awk "END{print NR}")
+SNP=$(awk -v FS=":" '$8 >=ENVIRON["SNPs_depth"]{ print $0 }' ${workdir}/stacks/populations.snps.vcf | awk -v FS=":" '$12 >= ENVIRON["SNPs_depth"]{ print $0 }' | awk "END{print NR}")
 SNP_Genome=$(printf "%.1f" $(echo "scale=10;${REF_length}/${SNP}" | bc))
 SNP_Consensus=$(printf "%.1f" $(echo "scale=10;${CONSENSUS_length}/${SNP}" | bc))
-echo -e "10\t$SNP\t$SNP_Genome\t$SNP_Consensus" >> ${stats_dir}/results.txt
+echo -e "SNPs depth: $SNPs_depth\t$SNP\t$SNP_Genome\t$SNP_Consensus" >> ${stats_dir}/results.txt
 
 # Get figures
 # Average snp depth - Figure with vcftools - R
