@@ -62,7 +62,7 @@ else
 fi
 
 # Main process
-echo -e "file\tR1_reads\tR2_reads\tR1_trimmed_reads\tR2_trimmed_reads\tR1_trim_rate\tR2_trim_rate\tTotal_trim_rate\tmean_coverage\tdepth_mean\tmapped_length\treference_length\tconsensus_length\tconsensus_coverage(Genome)\tconsensus_coverage(Mapped)" > ${stats_dir}/results.txt
+echo -e "file\tR1_reads\tR2_reads\tR1_trimmed_reads\tR2_trimmed_reads\tR1_trim_rate\tR2_trim_rate\tTotal_trim_rate\tmean_coverage\tdepth_mean\tmapped_length\total_mapped_length\treference_length\tconsensus_length\tconsensus_coverage(Genome)\tconsensus_coverage(Mapped)" > ${stats_dir}/results.txt
 for file in $files
 do
   echo "Analyzing file ${file}."
@@ -106,12 +106,13 @@ do
   # Consensus Coverage (Of Genome Size) - with bash script
   # Consensus Coverage (Of Mapped Length After Trimming)) - with bash script
   CONSENSUS_length=`awk 'BEGIN{sum=0}{sum += $2}END{print sum}' ${stats_dir}/Consensus/consensus.txt`
+  total_mapped_length=`awk 'BEGIN{sum=0}{sum += $3}END{print sum}' ${stats_dir}/Consensus/consensus.txt`
   CONSENSUS_coverage_G=$(printf "%.5f" $(echo "scale=10;${CONSENSUS_length}/${REF_length}" | bc))
-  CONSENSUS_coverage_M=$(printf "%.5f" $(echo "scale=10;${CONSENSUS_length}/${MAPPED_bases}" | bc))
+  CONSENSUS_coverage_M=$(printf "%.5f" $(echo "scale=10;${CONSENSUS_length}/${total_mapped_length}" | bc))
 
   echo "Consensus analysis data parsed."
 
-  echo -e "$file\t$R1_reads\t$R2_reads\t$R1_trimmed_reads\t$R2_trimmed_reads\t$R1_trim_rate\t$R2_trim_rate\t$Total_trim_rate\t$COVERAGE\t$DEPTH_mean\t$MAPPED_bases\t$REF_length\t$CONSENSUS_length\t$CONSENSUS_coverage_G\t$CONSENSUS_coverage_M" >> ${stats_dir}/results.txt
+  echo -e "$file\t$R1_reads\t$R2_reads\t$R1_trimmed_reads\t$R2_trimmed_reads\t$R1_trim_rate\t$R2_trim_rate\t$Total_trim_rate\t$COVERAGE\t$DEPTH_mean\t$MAPPED_bases\t$total_mapped_length\t$REF_length\t$CONSENSUS_length\t$CONSENSUS_coverage_G\t$CONSENSUS_coverage_M" >> ${stats_dir}/results.txt
 done
 
 # SNPs Count - with bash script using vcf file
