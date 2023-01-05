@@ -38,11 +38,6 @@ done
 awk -v FS="\t"  'NR> 1{print $1}' ${stacks_dir}/catalog.chrs.tsv > ${stats_dir}/Consensus/chr.txt
 chromosomes=`cat ${stats_dir}/Consensus/chr.txt`
 
-#var=$sample_num*
-# export var;
-#awk 'BEGIN{print ENVIRON["var"]}'
-
-
 # consensus length
 num_files=`echo $files | wc -w`
 filter_depth=`echo "scale=0; $num_files * $stacks_r" | bc`
