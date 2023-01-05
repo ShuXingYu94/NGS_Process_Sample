@@ -3,6 +3,7 @@ from dna_features_viewer import GraphicFeature, GraphicRecord
 import matplotlib.pyplot as plt
 import io
 import sys
+from tqdm import tqdm
 
 def read_vcf(path):
     with open(path, 'r') as f:
@@ -33,6 +34,7 @@ count = 0
 for chrom in chromosome:
     #     fig, ax1 = plt.subplots(1, figsize=(20, 3))
     # chrom=chromosome[1]
+    # print('Dealing with chromosome: {}'.format(chrom))
     count += 1
     ax = fig.add_subplot(20, 3, count)
 
@@ -41,11 +43,19 @@ for chrom in chromosome:
     length = int(length_ls[length_ls['# Chrom'] == chrom]['Length'])
 
     features = []
+
+    pbar = tqdm(total=100)
+    pbar.set_description("Processing %s:" % chrom)
+    total=len(data.index)
+    n=100/total
     for ind in data.index:
         pos = int(data.loc[ind, 'POS'])
         #         print(pos)
         features.append(GraphicFeature(start=pos, end=pos, strand=+1, color="#ffd700",
                                        label=str(pos)))
+        pbar.update(n)
+    pbar.refresh()
+    pbar.close()
     #     print(features)
     record = GraphicRecord(sequence_length=length, features=features, ticks_resolution=length / 4)
     ax.set_title("Chromosome {}".format(chrom), loc='left', weight='bold')
