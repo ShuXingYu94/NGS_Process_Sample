@@ -174,23 +174,15 @@ awk '{$4="";print $0}' mean_depth_stat_10.ldepth.mean |  awk '$0=NR" "$0' > SNP_
 cd ${workdir}
 cp ./stacks/SNP_Mean_Depth_10.txt tmp.txt
 R -f r_plot.r
+R -f r_distribution.r
 rm tmp.txt
 if test -f "Rectangular-Manhattan.MEAN_DEPTH_depth.jpg"; then
-  mv Rectangular-Manhattan.MEAN_DEPTH_depth.jpg ./statistics/SNP_Depth_10.jpg
+  mv Rectangular-Manhattan.MEAN_DEPTH_depth.jpg ./statistics/SNP_Depth_0.jpg
 else
-  echo "Rscript was not successfully executed."
+  echo "SNP_Depth_10.jpg was not successfully created."
 fi
-
-# snp across chr - r script
-#cd ${workdir}
-#if command -v python3 >/dev/null 2>&1; then
-#  python3 ${workdir}/chr_fig.py ${stacks_dir}/populations.snps.vcf ${stats_dir}/SNPs_Distribution_0
-#  python3 ${workdir}/chr_fig.py ${stacks_dir}/snps_depth_10.txt ${stats_dir}/SNPs_Distribution_10
-#else
-#  if command -v python >/dev/null 2>&1; then
-#    python ${workdir}/chr_fig.py ${stacks_dir}/populations.snps.vcf ${stats_dir}/SNPs_Distribution_0
-#    python ${workdir}/chr_fig.py ${stacks_dir}/snps_depth_10.txt ${stats_dir}/SNPs_Distribution_10
-#  else
-#    echo "Python is not installed. Please install."
-#  fi
-#fi
+if test -f "SNP-Density.MEAN_DEPTH.jpg"; then
+  mv SNP-Density.MEAN_DEPTH.jpg ./statistics/SNPs_Distribution_0.jpg
+else
+  echo "SNPs_Distribution_10.jpg was not successfully created."
+fi
