@@ -6,9 +6,12 @@ export SNPs_depth
 # Download python and r scripts
 if command -v wget >/dev/null 2>&1; then
   wget -O ${workdir}/r_plot.r https://raw.githubusercontent.com/ShuXingYu94/NGS_Process_Sample/master/r_plot.r
+  wget -O ${workdir}/r_plot.r https://raw.githubusercontent.com/ShuXingYu94/NGS_Process_Sample/master/r_distribution.r
+
 else
   if command -v curl >/dev/null 2>&1; then
     curl -o ${workdir}/r_plot.r https://raw.githubusercontent.com/ShuXingYu94/NGS_Process_Sample/master/r_plot.r
+    curl -o ${workdir}/r_plot.r https://raw.githubusercontent.com/ShuXingYu94/NGS_Process_Sample/master/r_distribution.r
   else
     echo "Wget and Curl are not installed. Please install."
     exit 0
@@ -140,6 +143,7 @@ echo -e "SNPs depth: $SNPs_depth\t$SNP\t$SNP_Genome\t$SNP_Consensus" >> ${stats_
 
 # Get figures
 # Average snp depth - Figure with vcftools - R
+# snp across chr - R
 # Whithout filtering
 cd ${stacks_dir}
 vcftools --vcf populations.snps.vcf --out mean_depth_stat --site-mean-depth
@@ -147,11 +151,17 @@ awk '{$4="";print $0}' mean_depth_stat.ldepth.mean |  awk '$0=NR" "$0' > SNP_Mea
 cd ${workdir}
 cp ./stacks/SNP_Mean_Depth.txt tmp.txt
 R -f r_plot.r
+R -f r_distribution.r
 rm tmp.txt
 if test -f "Rectangular-Manhattan.MEAN_DEPTH_depth.jpg"; then
   mv Rectangular-Manhattan.MEAN_DEPTH_depth.jpg ./statistics/SNP_Depth_0.jpg
 else
-  echo "Rscript was not successfully executed."
+  echo "SNP_Depth_0.jpg was not successfully created."
+fi
+if test -f "SNP-Density.MEAN_DEPTH.jpg"; then
+  mv SNP-Density.MEAN_DEPTH.jpg ./statistics/SNPs_Distribution_0.jpg
+else
+  echo "SNPs_Distribution_0.jpg was not successfully created."
 fi
 
 # With filtering
@@ -171,16 +181,16 @@ else
   echo "Rscript was not successfully executed."
 fi
 
-# snp across chr - python script
-cd ${workdir}
-if command -v python3 >/dev/null 2>&1; then
-  python3 ${workdir}/chr_fig.py ${stacks_dir}/populations.snps.vcf ${stats_dir}/SNPs_Distribution_0
-  python3 ${workdir}/chr_fig.py ${stacks_dir}/snps_depth_10.txt ${stats_dir}/SNPs_Distribution_10
-else
-  if command -v python >/dev/null 2>&1; then
-    python ${workdir}/chr_fig.py ${stacks_dir}/populations.snps.vcf ${stats_dir}/SNPs_Distribution_0
-    python ${workdir}/chr_fig.py ${stacks_dir}/snps_depth_10.txt ${stats_dir}/SNPs_Distribution_10
-  else
-    echo "Python is not installed. Please install."
-  fi
-fi
+# snp across chr - r script
+#cd ${workdir}
+#if command -v python3 >/dev/null 2>&1; then
+#  python3 ${workdir}/chr_fig.py ${stacks_dir}/populations.snps.vcf ${stats_dir}/SNPs_Distribution_0
+#  python3 ${workdir}/chr_fig.py ${stacks_dir}/snps_depth_10.txt ${stats_dir}/SNPs_Distribution_10
+#else
+#  if command -v python >/dev/null 2>&1; then
+#    python ${workdir}/chr_fig.py ${stacks_dir}/populations.snps.vcf ${stats_dir}/SNPs_Distribution_0
+#    python ${workdir}/chr_fig.py ${stacks_dir}/snps_depth_10.txt ${stats_dir}/SNPs_Distribution_10
+#  else
+#    echo "Python is not installed. Please install."
+#  fi
+#fi

@@ -31,7 +31,10 @@ for a in tmp:
 
 fig = plt.figure(figsize=(30, 4.5 * len(chromosome)))
 count = 0
+pbar = tqdm(total=10000)
+n=int(10000/len(chromosome))
 for chrom in chromosome:
+    pbar.set_description("Processing %s:" % chrom)
     #     fig, ax1 = plt.subplots(1, figsize=(20, 3))
     # chrom=chromosome[1]
     # print('Dealing with chromosome: {}'.format(chrom))
@@ -44,20 +47,15 @@ for chrom in chromosome:
 
     features = []
 
-    pbar = tqdm(total=100)
-    pbar.set_description("Processing %s:" % chrom)
-    total=len(data.index)
-    n=100/total
     for ind in data.index:
         pos = int(data.loc[ind, 'POS'])
-        #         print(pos)
         features.append(GraphicFeature(start=pos, end=pos, strand=+1, color="#ffd700",
                                        label=str(pos)))
-        pbar.update(n)
-    pbar.refresh()
-    pbar.close()
-    #     print(features)
     record = GraphicRecord(sequence_length=length, features=features, ticks_resolution=length / 4)
     ax.set_title("Chromosome {}".format(chrom), loc='left', weight='bold')
     record.plot(ax=ax)
+    pbar.update(n)
+pbar.update(10000-n*len(chromosome))
+pbar.refresh()
+pbar.close()
 fig.savefig('{}.svg'.format(out_name), format='svg')
