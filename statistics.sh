@@ -4,14 +4,15 @@
 export SNPs_depth
 
 # Download python and r scripts
+cd ${workdir}
 if command -v wget >/dev/null 2>&1; then
   wget -O ${workdir}/r_plot.r https://raw.githubusercontent.com/ShuXingYu94/NGS_Process_Sample/master/r_plot.r
-  wget -O ${workdir}/r_plot.r https://raw.githubusercontent.com/ShuXingYu94/NGS_Process_Sample/master/r_distribution.r
+  wget -O ${workdir}/r_distribution.r https://raw.githubusercontent.com/ShuXingYu94/NGS_Process_Sample/master/r_distribution.r
 
 else
   if command -v curl >/dev/null 2>&1; then
     curl -o ${workdir}/r_plot.r https://raw.githubusercontent.com/ShuXingYu94/NGS_Process_Sample/master/r_plot.r
-    curl -o ${workdir}/r_plot.r https://raw.githubusercontent.com/ShuXingYu94/NGS_Process_Sample/master/r_distribution.r
+    curl -o ${workdir}/r_distribution.r https://raw.githubusercontent.com/ShuXingYu94/NGS_Process_Sample/master/r_distribution.r
   else
     echo "Wget and Curl are not installed. Please install."
     exit 0
