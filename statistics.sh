@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# Settings
+draw_genome_border="FALSE" # FALSE if genoome border is not needed in distribution figure.
+
 # Statistics
 export SNPs_depth
 
@@ -151,7 +154,9 @@ vcftools --vcf populations.snps.vcf --out mean_depth_stat --site-mean-depth
 awk '{$4="";print $0}' mean_depth_stat.ldepth.mean |  awk '$0=NR" "$0' > SNP_Mean_Depth.txt
 cd ${workdir}
 cp ./stacks/SNP_Mean_Depth.txt tmp.txt
-awk 'NR>1{print $2,$1,$3,0}' ./statistics/Coverage/d1-LE.txt >> tmp.txt # add the right border
+if ! draw_genome_border="FALSE";then
+  awk 'NR>1{print $2,$1,$3,0}' ./statistics/Coverage/d1-LE.txt >> tmp.txt # add the right border
+fi
 R -f r_plot.r
 R -f r_distribution.r
 rm tmp.txt
@@ -176,7 +181,9 @@ vcftools --vcf snps_depth_${SNPs_depth}.vcf --site-mean-depth --out mean_depth_s
 awk '{$4="";print $0}' mean_depth_stat_${SNPs_depth}.ldepth.mean |  awk '$0=NR" "$0' > SNP_Mean_Depth_${SNPs_depth}.txt
 cd ${workdir}
 cp ./stacks/SNP_Mean_Depth_${SNPs_depth}.txt tmp.txt
-awk 'NR>1{print $2,$1,$3,0}' ./statistics/Coverage/d1-LE.txt >> tmp.txt # add the right border
+if ! draw_genome_border="FALSE";then
+  awk 'NR>1{print $2,$1,$3,0}' ./statistics/Coverage/d1-LE.txt >> tmp.txt # add the right border
+fi
 R -f r_plot.r
 R -f r_distribution.r
 rm tmp.txt
