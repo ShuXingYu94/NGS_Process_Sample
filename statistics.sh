@@ -51,11 +51,11 @@ if ! test -f "${stats_dir}/Consensus/consensus.txt"; then
   for chr in $chromosomes
   do
     {
-      cat ${stats_dir}/Read_depth/*.txt | grep $chr | awk '{print $2}' | sort | uniq -c > ${log_dir}/consensus_${chr}.txt
-      CONSENSUS_length=`awk '$1 >= ENVIRON["filter_depth"]{ print $0 }' ${log_dir}/consensus_${chr}.txt | awk "END{print NR}"`
-      map_length=`awk 'END{print NR}' ${log_dir}/consensus_${chr}.txt`
-      echo "$chr" "${CONSENSUS_length}" "$map_length" >> ${stats_dir}/Consensus/tmp_consensus.txt
-      } &
+    cat ${stats_dir}/Read_depth/*.txt | grep $chr | awk '{print $2}' | sort | uniq -c > ${log_dir}/consensus_${chr}.txt
+    CONSENSUS_length=`awk '$1 >= ENVIRON["filter_depth"]{ print $0 }' ${log_dir}/consensus_${chr}.txt | awk "END{print NR}"`
+    map_length=`awk 'END{print NR}' ${log_dir}/consensus_${chr}.txt`
+    echo "$chr" "${CONSENSUS_length}" "$map_length" >> ${stats_dir}/Consensus/tmp_consensus.txt
+    } &
   done
   wait
   sort ${stats_dir}/Consensus/tmp_consensus.txt > ${stats_dir}/Consensus/consensus.txt
@@ -151,6 +151,7 @@ vcftools --vcf populations.snps.vcf --out mean_depth_stat --site-mean-depth
 awk '{$4="";print $0}' mean_depth_stat.ldepth.mean |  awk '$0=NR" "$0' > SNP_Mean_Depth.txt
 cd ${workdir}
 cp ./stacks/SNP_Mean_Depth.txt tmp.txt
+awk 'NR>1{print $2,$1,$3,0}' ./statistics/Coverage/d1-LE.txt >> tmp.txt # add the right border
 R -f r_plot.r
 R -f r_distribution.r
 rm tmp.txt
@@ -165,6 +166,7 @@ else
   echo "SNPs_Distribution_0.jpg was not successfully created."
 fi
 
+
 # With filtering
 cd ${stacks_dir}
 cat populations.snps.vcf | grep -E '#' > vcfform.txt
@@ -174,6 +176,7 @@ vcftools --vcf snps_depth_${SNPs_depth}.vcf --site-mean-depth --out mean_depth_s
 awk '{$4="";print $0}' mean_depth_stat_${SNPs_depth}.ldepth.mean |  awk '$0=NR" "$0' > SNP_Mean_Depth_${SNPs_depth}.txt
 cd ${workdir}
 cp ./stacks/SNP_Mean_Depth_${SNPs_depth}.txt tmp.txt
+awk 'NR>1{print $2,$1,$3,0}' ./statistics/Coverage/d1-LE.txt >> tmp.txt # add the right border
 R -f r_plot.r
 R -f r_distribution.r
 rm tmp.txt
