@@ -123,8 +123,8 @@ done
 # Mapped Length/SNP
 # Consensus Length/SNP
 
-awk '/#CHROM/{print $0}' ${workdir}/stacks/populations.snps.vcf > ${stacks_dir}/snps_depth_10.txt
-awk -v FS=":" '$8 >= ENVIRON["SNPs_depth"]{ print $0 }' ${workdir}/stacks/populations.snps.vcf | awk -v FS=":" '$12 >= ENVIRON["SNPs_depth"]{ print $0 }' >> ${stacks_dir}/snps_depth_10.txt
+awk '/#CHROM/{print $0}' ${workdir}/stacks/populations.snps.vcf > ${stacks_dir}/snps_depth_${SNPs_depth}.txt
+awk -v FS=":" '$8 >= ENVIRON["SNPs_depth"]{ print $0 }' ${workdir}/stacks/populations.snps.vcf | awk -v FS=":" '$12 >= ENVIRON["SNPs_depth"]{ print $0 }' >> ${stacks_dir}/snps_depth_${SNPs_depth}.txt
 
 echo -e "\n#SNP count" >> ${stats_dir}/results.txt
 echo -e "SNP_depth\tSNP_count\tgenome_length_per_SNP\tconsensus_length_per_SNP" >> ${stats_dir}/results.txt
@@ -168,22 +168,22 @@ fi
 # With filtering
 cd ${stacks_dir}
 cat populations.snps.vcf | grep -E '#' > vcfform.txt
-sed -e '/#CHROM/r vcfform.txt' snps_depth_10.txt | sed '1d' > snps_depth_10.vcf
+sed -e '/#CHROM/r vcfform.txt' snps_depth_${SNPs_depth}.txt | sed '1d' > snps_depth_${SNPs_depth}.vcf
 rm vcfform.txt
-vcftools --vcf snps_depth_10.vcf --site-mean-depth --out mean_depth_stat_10
-awk '{$4="";print $0}' mean_depth_stat_10.ldepth.mean |  awk '$0=NR" "$0' > SNP_Mean_Depth_10.txt
+vcftools --vcf snps_depth_${SNPs_depth}.vcf --site-mean-depth --out mean_depth_stat_${SNPs_depth}
+awk '{$4="";print $0}' mean_depth_stat_${SNPs_depth}.ldepth.mean |  awk '$0=NR" "$0' > SNP_Mean_Depth_${SNPs_depth}.txt
 cd ${workdir}
-cp ./stacks/SNP_Mean_Depth_10.txt tmp.txt
+cp ./stacks/SNP_Mean_Depth_${SNPs_depth}.txt tmp.txt
 R -f r_plot.r
 R -f r_distribution.r
 rm tmp.txt
 if test -f "Rectangular-Manhattan.MEAN_DEPTH_depth.jpg"; then
-  mv Rectangular-Manhattan.MEAN_DEPTH_depth.jpg ./statistics/SNP_Depth_0.jpg
+  mv Rectangular-Manhattan.MEAN_DEPTH_depth.jpg ./statistics/SNP_Depth_${SNPs_depth}.jpg
 else
-  echo "SNP_Depth_10.jpg was not successfully created."
+  echo "SNP_Depth_${SNPs_depth}.jpg was not successfully created."
 fi
 if test -f "SNP-Density.MEAN_DEPTH.jpg"; then
-  mv SNP-Density.MEAN_DEPTH.jpg ./statistics/SNPs_Distribution_0.jpg
+  mv SNP-Density.MEAN_DEPTH.jpg ./statistics/SNPs_Distribution_${SNPs_depth}.jpg
 else
-  echo "SNPs_Distribution_10.jpg was not successfully created."
+  echo "SNPs_Distribution_${SNPs_depth}.jpg was not successfully created."
 fi
