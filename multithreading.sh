@@ -78,8 +78,6 @@ done
 gstacks -I ${aligned_dir} -M ${popmap_dir}  -O ${stacks_dir} -t ${threads}
 populations -t ${threads} -P ${stacks_dir} -M ${popmap_dir} --structure --vcf  -r ${stacks_r} -O ${stacks_dir}
 
-#!/bin/sh
-
 # Settings
 draw_genome_border="FALSE" # FALSE if genoome border is not needed in distribution figure.
 
