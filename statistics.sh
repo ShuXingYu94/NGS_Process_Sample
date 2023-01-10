@@ -77,7 +77,7 @@ do
   # Reads Count (Raw Data) - with seqkit stats
   cd ${basecall_dir}
   fn1=`ls ${basecall_dir} | grep *$file*R1*.gz`
-  fn2=`ls ${basecall_dir} | grep *$file*R1*.gz`
+  fn2=`ls ${basecall_dir} | grep *$file*R2*.gz`
   R1_reads=`seqkit stats $fn1 -T -j ${threads} | awk 'NR>1{print $4}'`
   R2_reads=`seqkit stats $fn2 -T -j ${threads} | awk 'NR>1{print $4}'`
 
