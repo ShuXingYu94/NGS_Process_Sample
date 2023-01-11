@@ -17,8 +17,10 @@ threads=6
 leading=20
 trailing=20
 minlen=50
-stacks_r=1.0
+stacks_r=0.8
 SNPs_depth=10
+read1_symbol=R1
+read2_symbol=R2
 
 # Secondary dir
 basecall_dir=${workdir}/BaseCall
@@ -60,20 +62,24 @@ else
 fi
 
 # Trimming
-for f in ${basecall_dir}/*R1*.gz
+for f in ${basecall_dir}/*${read1_symbol}*.f*
 do
 out=${f/${basecall_dir}/${trimmed_dir}}
-java -jar ${trimmomatic_dir} PE -phred33 -threads ${threads} ${f} ${f/R1/R2} ${out/R1/R1p} ${out/R1/R1up} ${out/R1/R2p} ${out/R1/R2up} ILLUMINACLIP:${adapter}:${illumina_clip} SLIDINGWINDOW:${slidingwindow} LEADING:${leading} TRAILING:${trailing} MINLEN:${minlen}
+java -jar ${trimmomatic_dir} PE -phred33 -threads ${threads} ${f} ${f/${read1_symbol}/${read2_symbol}} ${out/${read1_symbol}/${read1_symbol}p} ${out/${read1_symbol}/${read1_symbol}up} ${out/${read1_symbol}/${read2_symbol}p} ${out/${read1_symbol}/${read2_symbol}up} ILLUMINACLIP:${adapter}:${illumina_clip} SLIDINGWINDOW:${slidingwindow} LEADING:${leading} TRAILING:${trailing} MINLEN:${minlen}
 #Optional: -trimlog ${out/.gz/.log}
 done
 
-# Mapping files
+# Mapping files - Need more fix in regex
 for file in ${files}
 do
-bwa mem -t ${threads} ${mapping_db} ${trimmed_dir}/${file}*R1p*.gz ${trimmed_dir}/${file}*R2p*.gz | samtools view -b | samtools sort --threads {threads} > ${aligned_dir}/${file}.bam
+bwa mem -t ${threads} ${mapping_db} ${trimmed_dir}/${file}*${read1_symbol}p*.f* ${trimmed_dir}/${file}*${read2_symbol}p*.f* | samtools view -b | samtools sort --threads {threads} > ${aligned_dir}/${file}.bam
 samtools index ${aligned_dir}/${file}.bam
 done
 
 # Stacks
 gstacks -I ${aligned_dir} -M ${popmap_dir}  -O ${stacks_dir} -t ${threads}
 populations -t ${threads} -P ${stacks_dir} -M ${popmap_dir} --structure --vcf  -r ${stacks_r} -O ${stacks_dir}
+
+
+# Re sample
+#ls -1 ${dir} | grep -E "(${file_name}.*(${read1_symbol}|${read2_symbol}).*\.(fastq|fq))|((${read1_symbol}|${read2_symbol}).*${file_name}.*\.(fastq|fq))|((${read1_symbol}|${read2_symbol}).*\.(fastq|fq).*${file_name})"

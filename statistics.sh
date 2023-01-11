@@ -76,8 +76,11 @@ do
 
   # Reads Count (Raw Data) - with seqkit stats
   cd ${basecall_dir}
-  fn1=`ls ${basecall_dir} | grep *$file*R1*.gz`
-  fn2=`ls ${basecall_dir} | grep *$file*R2*.gz`
+  fn1=`ls -1 ${basecall_dir} | grep -E "(.*${file}.*${read1_symbol}.*\.(fastq|fq))|(.*${read1_symbol}.*${file}.*\.(fastq|fq))|(.*${read1_symbol}.*\.(fastq|fq).*${file})"`
+  fn2=`ls -1 ${basecall_dir} | grep -E "(.*${file}.*${read2_symbol}.*\.(fastq|fq))|(.*${read2_symbol}.*${file}.*\.(fastq|fq))|(.*${read2_symbol}.*\.(fastq|fq).*${file})"`
+  if ! `$fn1 | awk '{print NR}'`==1; then
+    echo "ERROR: multiple (or none) file name containing ${file}, ${read1_symbol} and fastq or fq are(is) found in directory '${basecall_dir}'."
+  fi
   R1_reads=`seqkit stats $fn1 -T -j ${threads} | awk 'NR>1{print $4}'`
   R2_reads=`seqkit stats $fn2 -T -j ${threads} | awk 'NR>1{print $4}'`
 
@@ -85,9 +88,11 @@ do
 
   # Reads Count (After trmming) - with seqkit stats
   cd  ${trimmed_dir}
-  fn3=`ls ${trimmed_dir} | grep $file |grep R1p`
-  fn4=`ls ${trimmed_dir} | grep $file |grep R2p`
-  #seqkit stats *R[1-2]p*.gz -T -j ${threads} >> ${stats_dir}/tmp2.txt
+  fn3=`ls -1 ${trimmed_dir} | grep -E "(.*${file}.*${read1_symbol}p.*\.(fastq|fq))|(.*${read1_symbol}p.*${file}.*\.(fastq|fq))|(.*${read1_symbol}p.*\.(fastq|fq).*${file})"`
+  fn4=`ls -1 ${trimmed_dir} | grep -E "(.*${file}.*${read2_symbol}p.*\.(fastq|fq))|(.*${read2_symbol}p.*${file}.*\.(fastq|fq))|(.*${read2_symbol}p.*\.(fastq|fq).*${file})"`
+  if ! `$fn3 | awk '{print NR}'`==1; then
+    echo "ERROR: multiple(or none) file name containing '${file}', '${read1_symbol}p' and 'fastq' or 'fq' are(is) found in directory '${trimmed_dir}'."
+  fi
   R1_trimmed_reads=`seqkit stats $fn3 -T -j ${threads} | awk 'NR>1{print $4}'`
   R2_trimmed_reads=`seqkit stats $fn4 -T -j ${threads} | awk 'NR>1{print $4}'`
   R1_trim_rate=$(printf "%.5f" $(echo "scale=10;${R1_trimmed_reads}/${R1_reads}" | bc))
