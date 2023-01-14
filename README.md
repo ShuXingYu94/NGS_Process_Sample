@@ -195,7 +195,6 @@ Please note that it is **not recommended** to run this script before you have su
 
 ## Documentation
 ![Alt text](https://raw.githubusercontent.com/ShuXingYu94/NGS_Process_Sample/master/img/flowchart.drawio.svg?sanitize=true)
-<img src="https://raw.githubusercontent.com/ShuXingYu94/NGS_Process_Sample/master/img/flowchart.drawio.svg?sanitize=true">
         **...still in progress, please follow the steps in [Quick Guide](#quick-guide).**
 
 ## Interpreting Results
