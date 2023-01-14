@@ -194,7 +194,8 @@ It takes advantage of multicore functionality to accelerate the whole calculatin
 Please note that it is **not recommended** to run this script before you have successfully executed all the commands stated in [Quick Guide](#quick-guide) for at least once.
 
 ## Documentation
-
+![Alt text](https://raw.githubusercontent.com/ShuXingYu94/NGS_Process_Sample/master/img/flowchart.drawio.svg?sanitize=true)
+<img src="https://raw.githubusercontent.com/ShuXingYu94/NGS_Process_Sample/master/img/flowchart.drawio.svg?sanitize=true">
         **...still in progress, please follow the steps in [Quick Guide](#quick-guide).**
 
 ## Interpreting Results
