@@ -2,7 +2,7 @@ biopython==1.80
 contourpy==1.0.6
 cycler==0.11.0
 dna-features-viewer==3.1.2
-fonttools==4.38.0
+fonttools
 kiwisolver==1.4.4
 matplotlib==3.6.2
 numpy==1.24.0
