@@ -1,5 +1,5 @@
 # Sample code for NGS processing
-> This programme takes advantage of Stacks to analyze NGS data.
+> This programme takes advantage of Stacks to analyze NGS data. We have successfully processed NGS data for Brassicacae plants and *Triticum aestivum* L.
 
 * [Required environment](#required-environment)
   + [Shell](#shell)
